@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planificateur OFPPT</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <aside class="navBar no-print">
+    <img class="logo" src="./imgs/logo.png" alt="LOGO" />
+    <nav>
+      <ul>
+        <li><a href="#importer">Importer</a></li>
+        <li><a href="#examen">Examen</a></li>
+        <li><a href="#stagiaires">Stagiaires</a></li>
+        <li><a href="#documents">Documents</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Importer -->
+  <section id="importer" class="carte no-print">
+    <h2><span class="etape">1</span> Importer les stagiaires</h2>
+    <div class="controls">
+      <label class="file-btn">📂 Importer le fichier Excel</label>
+      <input type="file" id="fileInput" accept=".xlsx,.xls">
+      <span id="fileName" class="file-name">Aucun fichier chargé</span>
+    </div>
+    <p id="message" class="message">
+      Importez le fichier <b>base_donnees.xlsx</b> puis choisissez une filière et un groupe.
+    </p>
+  </section>
+
+  <!-- Formulaire des examens (filière + groupe + infos de l'examen) -->
+  <section id="examen" class="carte no-print">
+    <h2><span class="etape">2</span> Formulaire de l'examen</h2>
+    <form id="formExamen" class="grid-form" onsubmit="return false">
+      <div class="champ">
+        <label for="filiereSelect">Filière</label>
+        <select id="filiereSelect" disabled>
+          <option value="">-- Choisir une filière --</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label for="groupeSelect">Groupe</label>
+        <select id="groupeSelect" disabled>
+          <option value="">-- Choisir un groupe --</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label for="etablissementInput">Établissement</label>
+        <input type="text" id="etablissementInput" value="CMFP Agadir">
+      </div>
+      <div class="champ">
+        <label for="dateInput">Date</label>
+        <input type="date" id="dateInput">
+      </div>
+      <div class="champ">
+        <label for="heureDebut">Heure de début</label>
+        <input type="time" id="heureDebut">
+      </div>
+      <div class="champ">
+        <label for="heureFin">Heure de fin</label>
+        <input type="time" id="heureFin">
+      </div>
+      <div class="champ">
+        <label for="salleInput">Salle</label>
+        <input type="text" id="salleInput" placeholder="Ex : Salle 12">
+      </div>
+      <div class="champ champ-large">
+        <label for="moduleInput">Matière / Intitulé du module</label>
+        <input type="text" id="moduleInput" placeholder="Ex : M105 - JavaScript">
+      </div>
+    </form>
+  </section>
+
+  <!-- Tableau des stagiaires -->
+  <section id="stagiaires" class="carte no-print">
+    <h2><span class="etape">3</span> Liste des stagiaires</h2>
+    <div class="controls">
+      <span id="compteur" class="compteur">0 / 0 sélectionné(s)</span>
+    </div>
+
+    <!-- Espace pour les stagiaires importés depuis Excel : le JS remplit le tbody -->
+    <div class="table-conteneur">
+      <table id="tableStagiaires" class="liste">
+        <thead>
+          <tr>
+            <th class="col-check"><input type="checkbox" id="selectAll" title="Tout sélectionner" disabled></th>
+            <th>CEF</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>CNI</th>
+            <th>Filière</th>
+            <th>Groupe</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyStagiaires">
+          <tr class="vide"><td colspan="7">Aucun stagiaire à afficher. Importez le fichier Excel puis choisissez une filière et un groupe.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- Boutons (NOUVEAU : Générer convocations, PDF) -->
+  <section id="actions" class="carte no-print">
+    <h2><span class="etape">4</span> Générer les documents</h2>
+    <div class="controls">
+      <button id="convocBtn" class="btn" disabled>📄 Générer les convocations</button>
+      <button id="presenceBtn" class="btn" disabled>📝 Générer la feuille de présence</button>
+      <button id="printBtn" class="btn btn-orange" disabled>🖨️ Imprimer</button>
+      <button id="pdfBtn" class="btn btn-orange" disabled>💾 Enregistrer en PDF</button>
+    </div>
+    <p class="astuce">
+      Pour le PDF : dans la fenêtre d'impression, choisissez <b>« Enregistrer au format PDF »</b> comme imprimante.
+      Si vous modifiez le formulaire, cliquez de nouveau sur « Générer ».
+    </p>
+  </section>
+
+  <!-- Zone des documents générés -->
+  <section id="documents">
+
+    <!-- Les convocations sont ajoutées ici par le JavaScript -->
+    <div id="zoneConvocations" class="hidden"></div>
+
+    <!-- Feuille de présence -->
+    <div id="sheet" class="sheet hidden">
+
+      <div class="sheet-header">
+        <div class="left">
+          <div class="logo">OFPPT</div>
+          <div class="italic">DRSM</div>
+          <div class="italic" id="sEtab">CMFP Agadir</div>
+        </div>
+
+        <div class="center">
+          <h2>Contrôle continu</h2>
+          <p class="rentree">RENTREE 2025-2026</p>
+          <p class="liste">LISTE DE PRESENCE DES PARTICIPANTS</p>
+        </div>
+
+        <div class="right">
+          <div class="logo round">CMFP</div>
+        </div>
+      </div>
+
+      <div class="infos">
+        <div class="infos-left">
+          <p><b>Niveau :</b> <span id="niveau"></span></p>
+          <p><b>Filière :</b> <span id="filiereLabel"></span></p>
+          <p><b>Date :</b> <span id="sDate"></span></p>
+          <p><b>Intitulé du module :</b> <span id="sModule"></span></p>
+        </div>
+        <div class="infos-right">
+          <p><b>Effectif stagiaires :</b> <span id="effectif"></span></p>
+          <p><b>Effectif présents :</b> <span id="presents">..........</span></p>
+          <p><b>Horaire :</b> <span id="sHoraire"></span></p>
+          <p><b>Salle :</b> <span id="sSalle"></span></p>
+        </div>
+      </div>
+
+      <table class="presence">
+        <thead>
+          <tr>
+            <th class="col-num">N°<br>Ordre</th>
+            <th class="col-cef">CEF</th>
+            <th class="col-nom">Nom</th>
+            <th class="col-prenom">Prénom</th>
+            <th>Signature<br>avant<br>examen</th>
+            <th>Signature<br>après<br>examen</th>
+            <th>Observations</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+
+      <div class="formateur">
+        <p class="formateur-title">Formateur évaluateur</p>
+        <table>
+          <tr><th>Prénom et nom</th><th>Emargement</th></tr>
+          <tr><td contenteditable="true"></td><td></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modèle de convocation (cloné par le JS pour chaque stagiaire) -->
+  <template id="tpl-convocation">
+    <div class="convocation">
+      <div class="sheet-header">
+        <div class="left">
+          <div class="logo">OFPPT</div>
+          <div class="italic">DRSM</div>
+          <div class="italic" data-champ="etablissement"></div>
+        </div>
+        <div class="center">
+          <h2>Contrôle continu</h2>
+          <p class="rentree">RENTREE 2025-2026</p>
+          <p class="liste conv-titre">CONVOCATION</p>
+        </div>
+        <div class="right">
+          <div class="logo round">CMFP</div>
+        </div>
+      </div>
+
+      <p class="conv-intro">Le (la) stagiaire :</p>
+      <table class="conv-infos">
+        <tr><th>Nom</th><td><b data-champ="nom"></b></td></tr>
+        <tr><th>Prénom</th><td><b data-champ="prenom"></b></td></tr>
+        <tr><th>CEF</th><td data-champ="cef"></td></tr>
+        <tr><th>CNI</th><td data-champ="cni"></td></tr>
+        <tr><th>Niveau</th><td data-champ="niveau"></td></tr>
+        <tr><th>Filière</th><td data-champ="filiere"></td></tr>
+        <tr><th>Groupe</th><td data-champ="groupe"></td></tr>
+      </table>
+
+      <p class="conv-intro">est convoqué(e) à l'examen suivant :</p>
+      <table class="conv-infos">
+        <tr><th>Matière</th><td><b data-champ="matiere"></b></td></tr>
+        <tr><th>Date</th><td data-champ="date"></td></tr>
+        <tr><th>Horaire</th><td>de <span data-champ="heureDebut"></span> à <span data-champ="heureFin"></span></td></tr>
+        <tr><th>Salle</th><td data-champ="salle"></td></tr>
+      </table>
+
+      <p class="consignes">
+        <b>Consignes :</b> le stagiaire doit se munir de sa CNI et de cette convocation,
+        et se présenter 15 minutes avant le début de l'examen.
+      </p>
+
+      <div class="conv-pied">
+        <p>Cachet et signature de l'administration</p>
+      </div>
+    </div>
+  </template>
+
+  <footer class="footer no-print">
+    Planificateur OFPPT &middot; CMFP Agadir &middot; Projet pédagogique
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

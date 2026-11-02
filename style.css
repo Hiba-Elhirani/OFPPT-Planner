@@ -1,0 +1,600 @@
+:root {
+  --sidebar: #20252b;
+  --sidebar-largeur: 240px;
+  --primary-color: #00a6a6;
+  --primary-hover: #008c8c;
+  --secondary-color: #e58f27;
+  --marine: #1a2e5c;
+  --fond: #f8f8f8;
+  --gris-label: #6b7078;
+  --bordure: #dcdfe4;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+html { 
+  scroll-behavior: smooth; 
+}
+
+body {
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--fond);
+  color: #222;
+  padding-left: var(--sidebar-largeur);  
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.navBar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-largeur);
+  background: var(--sidebar);
+  color: #fff;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-y: auto;
+  z-index: 10;
+}
+.navBar .logo {
+  width: 110px;
+  height: 100px;
+  margin: 10px;
+  position: relative;
+  left: 30px;
+}
+
+nav ul { 
+  display: flex;
+  flex-direction: column; 
+  gap: 6px; 
+  list-style: none; 
+}
+nav a {
+  display: block;
+  color: #d4d8de;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  transition: background .15s, color .15s;
+}
+nav a:hover { 
+  background: rgba(255,255,255,.08); 
+  color: #fff; 
+}
+
+/* lien actif */
+body:not(:has(:target)) nav a[href="#importer"],
+body:has(#importer:target) nav a[href="#importer"],
+body:has(#examen:target) nav a[href="#examen"],
+body:has(#stagiaires:target) nav a[href="#stagiaires"],
+body:has(#actions:target) nav a[href="#actions"],
+body:has(#documents:target) nav a[href="#documents"] {
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Cartes (sections)*/
+.carte {
+  background: #fff;
+  max-width: 1100px;
+  margin: 26px 40px;
+  padding: 26px 30px 28px;
+  border-radius: 22px;
+  border-top: 5px solid var(--primary-color);
+  box-shadow: 0 4px 18px rgba(26, 46, 92, .07);
+  scroll-margin-top: 20px;
+}
+#actions.panel { 
+  border-top-color: var(--secondary-color); 
+}
+
+.carte h2 {
+  font-size: 20px;
+  color: var(--marine);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.etape {
+  background: var(--secondary-color);
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 14px;
+}
+#actions .etape { 
+  background: var(--secondary-color); 
+}
+#documents { 
+  scroll-margin-top: 20px; 
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Boutons */
+.file-btn,
+.btn {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  transition: background .15s, transform .1s;
+}
+.file-btn:hover, .btn:hover { 
+  background: var(--primary-hover); 
+}
+.btn:active, .file-btn:active { 
+  transform: translateY(1px); 
+}
+.file-btn input { 
+  display: none; 
+}
+
+.btn-orange { 
+  background: var(--secondary-color); 
+}
+.btn-orange:hover { 
+  background: #cf7d1c; 
+}
+
+.btn:disabled, select:disabled { 
+  opacity: .45; 
+  cursor: not-allowed; 
+}
+.btn:disabled:hover { 
+  background: var(--primary-color); 
+}
+.btn-orange:disabled:hover { 
+  background: var(--secondary-color); 
+}
+
+.file-name { 
+  font-size: 13px; 
+  color: var(--gris-label); 
+  align-self: center; 
+}
+.message { 
+  margin: 16px 0 0; 
+  color: var(--gris-label); 
+  font-size: 14px; 
+}
+.astuce { 
+  font-size: 12.5px; 
+  color: var(--gris-label); 
+  margin-top: 14px; 
+}
+
+/* Listes déroulantes et champs */
+.field { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+}
+.field label, .champ label {
+  display: block;
+  margin: 0 0 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--gris-label);
+}
+.champ input, .champ select, .field select {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  color: #222;
+}
+.champ input:focus, .champ select:focus, .field select:focus {
+  outline: 2px solid rgba(0, 166, 166, .35);
+  border-color: var(--primary-color);
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 20px;
+}
+.champ-large { 
+  grid-column: span 2; 
+}
+
+/* Tableau des stagiaires */
+.compteur {
+  margin-left: auto;
+  align-self: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-color);
+  background: rgba(0, 166, 166, .1);
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.table-conteneur {
+  margin-top: 16px;
+  max-height: 400px;
+  overflow: auto;
+  border: 1px solid #e6e9ed;
+  border-radius: 16px;
+}
+table.liste { 
+  width: 100%; 
+  border-collapse: collapse; 
+  font-size: 14px; 
+}
+table.liste th {
+  background: #eaf6f6;
+  color: var(--marine);
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 12px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+}
+table.liste td { 
+  padding: 10px 14px; 
+  border-bottom: 1px solid #eef0f3; 
+}
+table.liste tbody tr:nth-child(even) { 
+  background: #f7fbfb; 
+}
+table.liste tbody tr:hover { 
+  background: #e6f5f5; 
+}
+table.liste .col-check { 
+  width: 46px; 
+  text-align: center; 
+}
+table.liste tr.vide td { 
+  text-align: center; 
+  color: var(--gris-label); 
+  padding: 32px; 
+  background: #fff; 
+}
+input[type="checkbox"] {
+  accent-color: var(--primary-color); 
+  width: 16px; 
+  height: 16px; 
+  cursor: pointer; 
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--gris-label);
+  padding: 20px 16px 30px;
+}
+
+/* Feuille de présence */
+.sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 24px auto;
+  padding: 12mm 12mm;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.hidden { 
+  display: none; 
+}
+
+.sheet-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: start;
+}
+.left .italic { 
+  font-style: italic; 
+  font-size: 13px; 
+  margin-top: 4px; 
+}
+.logo {
+  width: 54px; 
+  height: 54px;
+  border: 2px solid #1f4e79;
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700; 
+  color: #1f4e79;
+}
+.right { 
+  display: flex; 
+  justify-content: flex-end; 
+}
+.logo.round { 
+  background: #f0a030; 
+  color: #fff; 
+  border-color: #f0a030; 
+}
+
+.center { 
+  text-align: center; 
+}
+.center h2 {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 24px;
+}
+.rentree { 
+  font-style: italic; 
+  font-weight: 600; 
+  margin-top: 4px; 
+  font-size: 13px; 
+}
+p.liste { 
+  font-style: italic; 
+  font-weight: 700; 
+  margin-top: 14px; 
+  font-size: 15px; 
+}
+
+.infos {
+  display: flex;
+  justify-content: space-between;
+  margin: 18px 0 12px;
+  font-style: italic;
+  font-size: 13px;
+}
+.infos p { 
+  margin: 5px 0; 
+}
+
+table.presence {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+table.presence th {
+  background: #9dc3e6;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-weight: 700;
+  padding: 6px 4px;
+  border: 1px solid #333;
+}
+table.presence td {
+  border: 1px solid #333;
+  padding: 5px 4px;
+  height: 26px;
+}
+.col-num { 
+  width: 6%; 
+}
+.col-cef { 
+  width: 15%; 
+}
+.col-nom { 
+  width: 19%; 
+}
+.col-prenom { 
+  width: 17%; 
+}
+table.presence td:first-child { 
+  text-align: center; 
+}
+
+.formateur { 
+  margin-top: 16px; 
+}
+.formateur-title { 
+  font-weight: 700; 
+  text-decoration: underline; 
+  font-style: italic; 
+  margin-bottom: 6px; 
+}
+.formateur table { 
+  width: 85%; 
+  margin-left: 12%; 
+  border-collapse: collapse; 
+  font-size: 12px; 
+}
+.formateur th, .formateur td { 
+  border: 1px solid #333; 
+  padding: 6px; 
+  font-weight: 400; 
+}
+.formateur td { 
+  height: 40px; 
+}
+
+/* Convocation */
+.convocation {
+  width: 210mm;
+  margin: 24px auto;
+  padding: 12mm 14mm;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.conv-titre {
+  font-size: 22px;
+  letter-spacing: 3px;
+  border: 2px solid #1f4e79;
+  display: inline-block;
+  padding: 4px 22px;
+  margin-top: 16px;
+}
+.conv-intro { 
+  margin: 22px 0 8px; 
+  font-style: italic; 
+  font-weight: 600; 
+  font-size: 14px; 
+}
+table.conv-infos { 
+  width: 100%; 
+  border-collapse: collapse; 
+  font-size: 14px; 
+}
+table.conv-infos th {
+  width: 28%;
+  text-align: left;
+  background: #9dc3e6;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  padding: 7px 10px;
+  border: 1px solid #333;
+}
+table.conv-infos td { 
+  padding: 7px 10px; 
+  border: 1px solid #333; 
+}
+.consignes {
+  margin-top: 24px;
+  padding: 10px 12px;
+  border: 1px dashed #666;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.conv-pied { 
+  margin-top: 50px; 
+  text-align: right; 
+  font-style: italic; 
+  font-weight: 600; 
+}
+.conv-pied p { 
+  margin-bottom: 70px; 
+}
+
+/* Impression */
+@page { size: A4; margin: 8mm; }
+@media print {
+  body { 
+    background: #fff; 
+    padding-left: 0; 
+  }
+  .no-print { 
+    display: none !important; 
+  }
+  .sheet { 
+    margin: 0; 
+    box-shadow: none; 
+    width: auto; 
+    min-height: auto; 
+    padding: 0; 
+  }
+  table.presence th, table.conv-infos th { 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+  .logo.round { 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+  .convocation {
+    margin: 0;
+    box-shadow: none;
+    width: auto;
+    padding: 0;
+    page-break-after: always;
+    break-after: page;
+    break-inside: avoid;
+  }
+  .convocation:last-child { 
+    page-break-after: auto; 
+    break-after: auto; 
+  }
+  thead { 
+    display: table-header-group; 
+  }
+  tr { 
+    break-inside: avoid; 
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body { 
+    padding-left: 0; 
+  }
+  .navBar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .navBar .logo {
+    width: 80px;
+    height: 75px;
+    margin: 10px;
+    position: relative;
+    left: 33%;
+  }
+  nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar {
+    display: none;
+  }
+  nav ul {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 6px;
+    width: max-content;
+    min-width: 100%;
+  }
+  nav a {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+  .carte { 
+    margin: 16px 12px; 
+    padding: 20px 18px; 
+  }
+  .grid-form { 
+    grid-template-columns: 1fr;
+  }
+  .champ-large { 
+    grid-column: auto; 
+  }
+  .compteur { 
+    margin-left: 0; 
+  }
+  .sheet, .convocation { 
+    width: auto; 
+    margin: 12px; 
+    padding: 16px; 
+    min-height: auto; 
+    overflow-x: auto; 
+  }
+  .infos { 
+    flex-direction: column; 
+  }
+}
