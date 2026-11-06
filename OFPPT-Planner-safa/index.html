@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OFPPT - Gestion des examens</title>
+        <link rel="stylesheet" href="style.css">
+
+        <!-- Bibliothèque utilisée uniquement pour lire Excel (.xlsx et .xls) -->
+        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+        <script src="import.js" defer></script>
+        <script src="documents.js" defer></script>
+        <script src="app.js" defer></script>
+        <script src="menu.js" defer></script>
+        <script src="dashboard.js" defer></script>
+    </head>
+    <body>
+        <!-- NOUVEAU : menu à gauche (les liens font défiler la page vers la section) -->
+        <nav class="menu">
+            <img src="assets/logo-ofppt.png" alt="Logo OFPPT">
+            <a href="#importer" class="actif">Importer</a>
+            <a href="#examen">Examen</a>
+            <a href="#stagiaires">Stagiaires</a>
+            <a href="#documents">Documents</a>
+            <!-- NOUVEAU : bouton en bas du menu -->
+            <button id="boutonDashboard">Dashboard</button>
+        </nav>
+
+        <div class="application">
+            <header>
+                <h1>Gestion des examens</h1>
+                <p>OFPPT - Convocations et feuilles de présence</p>
+            </header>
+
+            <main>
+                <!-- Étape 1 : importer une liste Excel -->
+                <section id="importer">
+                    <h2><span class="num">1</span></h2>
+                    <label class="upload-box">
+                        <input type="file" id="fichierExcel" accept=".xlsx,.xls,.csv">
+                        <span class="upload-icon">☁</span>
+                        <strong>Téléchargez votre fichier </strong>
+                        <small>Glissez-déposez votre fichier ici</small>
+                        <small>ou parcourez vos fichiers</small>
+                        <span class="upload-btn">Choisir un fichier</span>
+                        <p id="message">Aucun fichier importé.</p>
+                        
+                    </label>
+
+                </section>
+
+                <!-- Étape 2 : choisir un groupe et saisir l'examen -->
+                <section id="examen">
+                    <h2><span class="num">2</span></h2>
+
+                    <div class="champs">
+                        <div>
+                            <label for="filiere">Filière</label>
+                            <select id="filiere">
+                                <option value="">Choisir une filière</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="groupe">Groupe</label>
+                            <select id="groupe">
+                                <option value="">Choisir un groupe</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="typeExamen">Type d'examen</label>
+                            <select id="typeExamen">
+                                <option value="EFF">Examen de Fin de Formation (EFF)</option>
+                                <option value="EFM">Examen de Fin de Module (EFM)</option>
+                                <option value="CC">Contrôle Continu (CC)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="annee">Année de formation</label>
+                            <input type="text" id="annee" value="2025-2026">
+                        </div>
+                        <div>
+                            <label for="session">Session</label>
+                            <input type="text" id="session" value="Juin 2026">
+                        </div>
+                        <div>
+                            <label for="niveau">Niveau (facultatif)</label>
+                            <select id="niveau">
+                                <option>TECHNICIEN SPÉCIALISÉ (TS)</option>
+                                <option>TECHNICIEN (T)</option>
+                                <option>QUALIFIANT(Q)</option>
+                                <option>CONDIDAT LIBRE</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dateExamen">Date de l'examen</label>
+                            <input type="date" id="dateExamen">
+                        </div>
+                        <div>
+                            <label for="heure">Heure</label>
+                            <input type="time" id="heure" placeholder="Ex. 08H30">
+                        </div>
+                        <div>
+                            <label for="salle">Salle / Atelier</label>
+                            <input type="text" id="salle" placeholder="Ex. Salle 02">
+                        </div>
+                        <div>
+                            <label for="epreuve">Épreuve / Module</label>
+                            <input type="text" id="epreuve" placeholder="Ex. Synthèse">
+                        </div>
+                        <div>
+                            <label for="etablissement">Établissement</label>
+                            <input type="text" id="etablissement" value="CMFP AGADIR">
+                        </div>
+                        <div>
+                            <label for="recherche">Rechercher un stagiaire</label>
+                            <input type="text" id="recherche" placeholder="Nom, prénom ou CEF">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Étape 3 : afficher la liste -->
+                <section id="stagiaires">
+                    <h2><span class="num">3</span><span>Liste des stagiaires (<span id="nombre">0</span>)</span></h2>
+                    <div class="tableau">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CEF</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>CNI</th>
+                                    <th>Filière</th>
+                                    <th>Groupe</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listeStagiaires"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Étape 4 : générer et imprimer -->
+                <section id="documents">
+                    <h2><span class="num">4</span></h2>
+                    <div class="boutons">
+                        <button id="boutonConvocations">Imprimer les convocations</button>
+                        <button id="boutonPresences">Imprimer la feuille de présence</button>
+                        <button id="boutonAffichage">Imprimer la liste d'affichage</button>
+                    </div>
+                </section>
+
+                <!-- NOUVEAU : Dashboard (caché tant qu'on ne clique pas sur le bouton) -->
+                <section id="dashboard" hidden>
+                    <h2><span>Dashboard</span></h2>
+                    <div class="dashboard">
+                        <div class="carte">
+                            <h3>Classe choisie</h3>
+                            <p>Filière : <strong id="dashFiliere">-</strong></p>
+                            <p>Groupe : <strong id="dashGroupe">-</strong></p>
+                            <p>Année : <strong id="dashAnnee">-</strong></p>
+                        </div>
+                        <div class="carte">
+                            <h3>Nombre de stagiaires</h3>
+                            <p class="grand-nombre" id="dashNombre">0</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Les documents sont placés ici juste avant l'impression -->
+         <div class="application"> 
+             <div id="zoneImpression"></div>
+         </div>
+    </body>
+</html>

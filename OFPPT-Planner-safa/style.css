@@ -1,0 +1,461 @@
+/* =========================================
+   1. GENERAL
+   ========================================= */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;      /* défilement doux vers les sections */
+}
+
+body {
+  margin: 0;
+  font-family: Poppins, Arial, sans-serif;
+  font-size: 14px;
+  color: #2b3440;
+  background: #f2f5f8;
+}
+
+
+/* =========================================
+   2. MENU A GAUCHE
+   ========================================= */
+.menu {
+  position: fixed;              /* reste fixe quand on défile */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background: #1f2630;
+  padding: 24px 14px;
+  display: flex;
+  flex-direction: column;       /* un lien sous l'autre */
+}
+
+.menu img {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 30px auto;     /* centré */
+  border-radius: 50%;
+  background: white;
+}
+
+.menu a {
+  color: #d5dbe3;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 30px;
+  margin-bottom: 8px;
+}
+
+.menu a:hover {
+  background: #2c3541;
+}
+
+.menu a.actif {
+  background: #00a9a5;          /* lien de la section visible */
+  color: white;
+  font-weight: bold;
+}
+
+
+/* =========================================
+   3. TITRE + CONTENU
+   ========================================= */
+.application {
+  margin-left: 220px;           /* place du menu */
+  padding: 0 28px;
+}
+
+header {
+  padding: 24px 0 8px 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #1b2a5c;
+}
+
+header p {
+  margin: 4px 0 0 0;
+  color: #6b7785;
+}
+
+/* grand espace en bas pour que la dernière section puisse monter en haut */
+main {
+  padding-bottom: 60vh;
+}
+
+/* chaque étape (1, 2, 3, 4) */
+section {
+  background: white;
+  border-top: 4px solid #00a9a5;
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  scroll-margin-top: 16px;      /* espace en haut après le clic sur le menu */
+}
+
+section h2 {
+  margin: 0 0 16px 0;
+  font-size: 17px;
+  color: #1b2a5c;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+section p {
+  margin: 0 0 12px 0;
+}
+
+/* petit rond orange avec le numéro */
+.num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8912d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Upload file*/
+
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fdfcfc;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: Arial, sans-serif;
+    padding: 5px 10px; 
+    gap: 6px;           
+    border: 2px dashed #b5edfd;
+    border-radius: 15px;
+}
+
+.upload-box:hover {
+    background: #f2f6f6;
+    border-color: #00a9a5;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-icon {
+    font-size: 40px;
+    color: #276160;
+}
+
+.upload-box strong {
+    color: #333;
+    font-size: 17px;
+}
+
+.upload-box small {
+    color: #888;
+    font-size: 13px;
+}
+
+.upload-btn {
+    padding: 10px 22px;
+    background: #00a9a5;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.upload-box:hover .upload-btn {
+    background: #29bdb8;
+}
+
+
+
+/* =========================================
+   4. FORMULAIRE
+   ========================================= */
+.champs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;   /* 3 colonnes */
+  gap: 14px 18px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #6b7785;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  width: 100%;
+  padding: 11px 16px;
+  border: 1px solid #dfe6ec;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+}
+
+input[type="file"] {
+  font-size: 14px;
+}
+
+#message,
+.aide {
+  font-size: 12px;
+  color: #6b7785;
+}
+
+
+/* =========================================
+   5. TABLEAU DES STAGIAIRES
+   ========================================= */
+.tableau {
+  border: 1px solid #dfe6ec;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.tableau table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableau th {
+  background: #e6f5f5;
+  color: #1b2a5c;
+  font-size: 12px;
+  padding: 12px;
+  text-align: left;
+}
+
+.tableau td {
+  padding: 10px 12px;
+  border-top: 1px solid #dfe6ec;
+}
+
+
+/* =========================================
+   6. BOUTONS
+   ========================================= */
+.boutons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+button {
+  background: #00a9a5;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #008c89;
+}
+
+
+/* =========================================
+   7. TELEPHONE
+   ========================================= */
+@media (max-width: 800px) {
+    
+  .menu {
+    position: static;
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .menu img {
+    display: none;
+  }
+  .application {
+    margin-left: 0;
+    padding: 0 14px;
+  }
+  .champs {
+    grid-template-columns: 1fr;
+  }
+}
+
+   /* 8. Modèles de documents à imprimer */
+#zoneImpression {
+    display: none;
+}
+
+.feuille {
+    padding: 12mm 13mm;
+    font-family: Arial, sans-serif;
+    color: black;
+    background: white;
+}
+
+.entete-document {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.entete-document img.logo {
+    width: 70px;
+    vertical-align: middle;
+}
+
+.entete-document img.arabe {
+    width: 290px;
+    max-width: 80%;
+    display: block;
+    margin: 6px auto;
+}
+
+.feuille h2, .feuille h3 {
+    text-align: center;
+}
+
+.feuille table {
+    font-size: 12px;
+}
+
+.feuille th, .feuille td {
+    border: 1px solid black;
+    padding: 7px;
+}
+
+.feuille th {
+    background: #eeeeee;
+}
+
+.feuille .message-arabe {
+    direction: rtl;
+    text-align: center;
+    font-size: 21px;
+    line-height: 1.9;
+    margin: 33px 4px;
+}
+
+.feuille .reglement {
+    direction: rtl;
+    text-align: right;
+    line-height: 1.7;
+    font-size: 14px;
+    margin-top: 26px;
+}
+
+.feuille .signature {
+    height: 30px;
+}
+
+.infos-examen {
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+/* 9. Impression (ou PDF par le navigateur) */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    /* Cacher toute la page */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Afficher uniquement le document */
+    #zoneImpression,
+    #zoneImpression * {
+        visibility: visible;
+    }
+
+    #zoneImpression {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 210mm;
+        background: white;
+    }
+
+    .feuille {
+        width: 210mm;
+        min-height: 296mm;
+        padding: 12mm 13mm;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        background: white;
+        color: black;
+        page-break-after: always;
+        break-after: page;
+    }
+
+    .feuille:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+}
+
+
+
+
+/*  10. DASHBOARD */
+/* le bouton est tout en bas du menu */
+.menu button {
+  margin-top: auto;             
+  background: #e8912d;          
+}
+
+.menu button:hover {
+  background: #cf7d1f;
+}
+
+/* les 2 cartes côte à côte */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.carte {
+  background: #e6f5f5;
+  border-radius: 16px;
+  padding: 20px 24px;
+}
+
+.carte h3 {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  color: #1b2a5c;
+}
+
+.carte p {
+  margin: 6px 0;
+}
+
+.grand-nombre {
+  font-size: 56px;
+  font-weight: bold;
+  color: #00a9a5;
+}
+
+
+
