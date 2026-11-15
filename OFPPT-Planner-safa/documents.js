@@ -87,8 +87,8 @@ function creerListe(liste, examen, affichage) {
     if (niveau === "" && liste.length > 0) niveau = liste[0].niveau;
 
     // On met 18 stagiaires par page pour laisser de la place aux signatures.
-    for (let debut = 0; debut < liste.length; debut += 18) {
-        let groupe = liste.slice(debut, debut + 18);
+    for (let debut = 0; debut < liste.length; debut += 30) {
+        let groupe = liste.slice(debut, debut + 30);
         let lignes = "";
 
         for (let i = 0; i < groupe.length; i++) {

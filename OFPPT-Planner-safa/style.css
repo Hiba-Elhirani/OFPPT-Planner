@@ -331,11 +331,13 @@ button:hover {
 
 .feuille table {
     font-size: 12px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .feuille th, .feuille td {
     border: 1px solid black;
-    padding: 7px;
+    padding: 4px;
 }
 
 .feuille th {
@@ -359,7 +361,7 @@ button:hover {
 }
 
 .feuille .signature {
-    height: 30px;
+    height: 18px;
 }
 
 .infos-examen {
