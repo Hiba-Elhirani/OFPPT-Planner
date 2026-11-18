@@ -1,135 +1,307 @@
 <!DOCTYPE html>
+
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OFPPT - Gestion des examens</title>
-        <link rel="stylesheet" href="style.css">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OFPPT - Gestion des examens</title>
+<link href="style.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" src="import.js"></script>
+<script defer="" src="documents.js"></script>
+<script defer="" src="conseil.js"></script>
+<script defer="" src="discipline.js"></script>
+<script defer="" src="app.js"></script>
+<link href="interface.css" rel="stylesheet"/><script defer="" src="navigation.js"></script><script defer="" src="absences.js"></script></head>
+<body>
+<div class="application"><aside aria-label="Navigation principale" class="navBar">
+<a aria-label="OFPPT, page importation" class="brand" href="#importer">
+<img alt="Logo de l'OFPPT" class="brand-logo" height="92" src="assets/logo-sidebar.png" width="92"/>
+<span class="brand-title">OFPPT</span>
+<span class="brand-caption">Gestion des examens</span>
+</a>
+<div class="nav-group-label">ESPACE DE TRAVAIL</div>
+<nav aria-label="Sections de l'application"><ul>
+<li><a aria-current="page" data-nav="importer" href="#importer"><span class="nav-number">01</span><span>Importer</span></a></li>
+<li><a data-nav="examen" href="#examen"><span class="nav-number">02</span><span>Examen</span></a></li>
+<li><a data-nav="stagiaires" href="#stagiaires"><span class="nav-number">03</span><span>Stagiaires</span></a></li>
+<li><a data-nav="documents" href="#documents"><span class="nav-number">04</span><span>Documents</span></a></li>
+<li><a data-nav="discipline" href="#discipline"><span class="nav-number">05</span><span>Discipline</span></a></li>
+<li><a data-nav="absences" href="#absences"><span class="nav-number">06</span><span>Absences</span></a></li>
+<li><a data-nav="conseil" href="#conseil"><span class="nav-number">07</span><span>Conseil disciplinaire</span></a></li>
+</ul></nav>
 
-        <!-- Bibliothèque utilisée uniquement pour lire Excel (.xlsx et .xls) -->
-        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-        <script src="import.js" defer></script>
-        <script src="documents.js" defer></script>
-        <script src="app.js" defer></script>
-    </head>
-    <body>
-        <div class="application">
-            <header>
-                <img src="assets/logo-ofppt.png" alt="Logo OFPPT">
-                <div>
-                    <h1>Gestion des examens</h1>
-                    <p>OFPPT - Convocations et feuilles de présence</p>
-                </div>
-            </header>
+</aside>
+<main class="workspace"><header class="page-header" id="pageHeader">
+<div class="page-intro">
+<p class="eyebrow">OFPPT / Espace de gestion</p>
+<h1 id="pageTitre">Importer les stagiaires</h1>
+<p id="pageDescription">Commencez par charger votre liste de stagiaires pour préparer les examens et les documents.</p>
+</div>
+<div aria-label="Étape actuelle" class="page-progress">
+<span class="progress-label">SECTION</span>
+<span id="pageCompteur">01 <span class="progress-divider">/ 07</span></span>
+</div>
+</header>
+<section aria-hidden="false" aria-labelledby="heading-importer" class="workspace-section import-card" data-section="importer" id="importer">
+<h2 id="heading-importer"><span aria-hidden="true" class="etape">1</span>Importer les stagiaires</h2><div aria-label="Étapes de préparation" class="welcome-guide">
+<div class="guide-card"><span class="guide-num">01</span><div><strong>Importer la liste</strong><p>Ajoutez les stagiaires depuis Excel ou CSV.</p></div></div>
+<div class="guide-card"><span class="guide-num">02</span><div><strong>Préparer l'examen</strong><p>Choisissez la filière, le groupe et les horaires.</p></div></div>
+<div class="guide-card"><span class="guide-num">03</span><div><strong>Générer les documents</strong><p>Imprimez les convocations et feuilles utiles.</p></div></div>
+</div>
+<p>Sélectionnez votre fichier XLS ou XLSX.</p>
+<div class="file-field"><input accept=".xlsx,.xls,.csv" id="fichierExcel" type="file"/></div>
+<p class="aide" id="message" role="status">Aucun stagiaire. Importez votre fichier Excel.</p>
+<div class="step-navigation"><a class="next-step" href="#examen">Étape suivante<span aria-hidden="true">→</span></a></div></section>
+<section aria-hidden="true" aria-labelledby="heading-examen" class="workspace-section exam-card" data-section="examen" hidden="" id="examen">
+<h2 id="heading-examen"><span aria-hidden="true" class="etape">2</span>Informations de l'examen</h2>
+<div class="champs">
+<div>
+<label for="filiere">Filière</label>
+<select id="filiere"><option value="">Choisir une filière</option></select>
+</div>
+<div>
+<label for="groupe">Groupe</label>
+<select id="groupe"><option value="">Choisir un groupe</option></select>
+</div>
+<div>
+<label for="typeExamen">Type d'examen</label>
+<select id="typeExamen">
+<option value="EFF">Examen de Fin de Formation (EFF)</option>
+<option value="EFM">Examen de Fin de Module (EFM)</option>
+<option value="CC">Contrôle Continu (CC)</option>
+</select>
+</div>
+<div>
+<label for="annee">Année de formation</label>
+<input id="annee" value="2025-2026"/>
+</div>
+<div>
+<label for="session">Session</label>
+<input id="session" value="Juin 2026"/>
+</div>
+<div>
+<label for="niveau">Niveau de formation (facultatif)</label>
+<select id="niveau">
+<option value="">Utiliser le niveau du fichier Excel</option>
+<option value="TECHNICIEN SPÉCIALISÉ">Technicien Spécialisé</option>
+<option value="TECHNICIEN">Technicien</option>
+<option value="QUALIFICATION">Qualification</option>
+<option value="SPÉCIALISATION">Spécialisation</option>
+<option value="FORMATION QUALIFIANTE">Formation qualifiante</option>
+</select>
+</div>
+<div>
+<label for="dateExamen">Date de l'examen</label>
+<input id="dateExamen" type="date"/>
+</div>
+<div>
+<label for="heure">Heure de démarrage</label>
+<input id="heure" step="60" type="time"/>
+</div>
+<div>
+<label for="heureFin">Heure de fin (facultatif)</label>
+<input id="heureFin" step="60" type="time"/>
+</div>
+<div>
+<label for="salle">Salle / Atelier</label>
+<input id="salle" placeholder="Ex. Salle 02"/>
+</div>
+<div>
+<label for="epreuve">Épreuve / Module</label>
+<input id="epreuve" placeholder="Ex. Synthèse"/>
+</div>
+<div>
+<label for="etablissement">Établissement (EFP)</label>
+<input id="etablissement" value="CMFP AGADIR"/>
+</div>
+<div>
+<label for="recherche">Rechercher un stagiaire</label>
+<input id="recherche" placeholder="Nom, prénom ou CEF"/>
+</div>
+</div>
+<div class="step-navigation"><a class="next-step" href="#stagiaires">Étape suivante<span aria-hidden="true">→</span></a></div></section>
+<section aria-hidden="true" aria-labelledby="heading-stagiaires" class="workspace-section students-card" data-section="stagiaires" hidden="" id="stagiaires">
+<h2 id="heading-stagiaires"><span aria-hidden="true" class="etape">3</span>Liste des stagiaires (<span id="nombre">0</span>)</h2>
+<div class="tableau" tabindex="0">
+<table>
+<thead>
+<tr>
+<th>CEF</th><th>Nom</th><th>Prénom</th>
+<th>CNI</th><th>Filière</th><th>Groupe</th>
+</tr>
+</thead>
+<tbody id="listeStagiaires"></tbody>
+</table>
+</div>
+<div class="step-navigation"><a class="next-step" href="#documents">Étape suivante<span aria-hidden="true">→</span></a></div></section>
+<section aria-hidden="true" aria-labelledby="heading-documents" class="workspace-section documents-card" data-section="documents" hidden="" id="documents">
+<h2 id="heading-documents"><span aria-hidden="true" class="etape">4</span>Générer les documents des examens</h2>
+<p>Choisissez d'abord la filière, le groupe et les informations de l'examen.</p>
+<div class="boutons">
+<button id="boutonConvocations">Convocations</button>
+<button id="boutonPresences">PV FF / Feuille de présence</button>
+<button id="boutonAffichage">Liste d'affichage</button>
+</div>
+<p class="aide">Pour les examens EFF, les boutons utilisent les modèles PV FF et AFF FF des fichiers Excel. Pour EFM et CC, un autre modèle de présence est utilisé.</p>
+<div class="step-navigation"><a class="next-step" href="#discipline">Étape suivante<span aria-hidden="true">→</span></a></div><p class="aide document-help">Pour sauvegarder un PDF : cliquez sur un bouton d'impression, puis choisissez « Enregistrer au format PDF » dans le navigateur. Aucune base de données n'est utilisée.</p></section>
+<section aria-hidden="true" aria-labelledby="heading-discipline" class="workspace-section discipline-card" data-section="discipline" hidden="" id="sectionDiscipline"><span aria-hidden="true" class="route-anchor" id="discipline"></span>
+<h2 id="heading-discipline"><span aria-hidden="true" class="etape">5</span>Note de discipline</h2>
+<p>Choisissez un stagiaire, la durée de sa formation et son année. La note est sur 20 avant la dernière année et sur 15 en dernière année (selon la grille à confirmer avec l'administration).</p>
+<div class="champs">
+<div>
+<label for="stagiaireDiscipline">Stagiaire</label>
+<select id="stagiaireDiscipline">
+<option value="">Importer la liste d'abord</option>
+</select>
+</div>
+<div>
+<label for="dureeDiscipline">Durée du cursus</label>
+<select id="dureeDiscipline">
+<option value="1">1 an</option>
+<option value="2">2 ans</option>
+<option value="3">3 ans</option>
+</select>
+</div>
+<div>
+<label for="anneeDiscipline">Année du stagiaire</label>
+<select id="anneeDiscipline">
+<option value="">Choisir l'année</option>
+</select>
+</div>
+<div>
+<label for="dateDiscipline">Date de l'événement</label>
+<input id="dateDiscipline" type="date"/>
+</div>
+</div>
+<div class="resume-discipline">
+<div>
+<span class="libelle-note">Note de discipline</span>
+<strong id="noteDiscipline">—</strong>
+</div>
+<p id="detailDiscipline">Sélectionnez un stagiaire et son année pour voir sa note.</p>
+</div>
+<h3>Enregistrer un événement</h3>
+<div class="boutons">
+<button data-evenement="retard" type="button">+ 1 retard (−0,25)</button>
+<button data-evenement="seance" type="button">+ 1 absence : 1 séance (−0,5)</button>
+<button data-evenement="journee" type="button">+ 1 absence : 1 journée (−1)</button>
+<button data-evenement="comportement" type="button">+ 1 indiscipline</button>
+</div>
+<p class="aide">Une séance = 2,5 heures ; une journée = 2 séances. En cursus de 3 ans : 1ère et 2ème années /20, 3ème année /15. Les règles pour les formations d'un an restent à confirmer par l'administration. Aucune sanction n'est décidée automatiquement.</p>
+<details class="subsection-disclosure" id="panel-historique"><summary><span class="disclosure-title">Historique de ce stagiaire</span><span class="disclosure-helper">Consulter le suivi</span></summary><div class="historique" id="historiqueDiscipline">Aucun stagiaire sélectionné.</div></details>
+<details class="subsection-disclosure" id="panel-notes"><summary><span class="disclosure-title">Notes de discipline des stagiaires affichés</span><span class="disclosure-helper">Voir les notes du groupe</span></summary><div class="tableau" tabindex="0">
+<table>
+<thead>
+<tr>
+<th>CEF</th><th>Nom et prénom</th><th>Groupe</th>
+<th>Année</th><th>Retards</th><th>Absences (séances)</th>
+<th>Indisciplines</th><th>Note</th>
+</tr>
+</thead>
+<tbody id="tableNotesDiscipline"></tbody>
+</table>
+</div></details>
+<details class="subsection-disclosure" id="panel-sauvegardes"><summary><span class="disclosure-title">Sauvegardes et export</span><span class="disclosure-helper">Exporter ou restaurer les données</span></summary><div class="boutons barre-sauvegarde">
+<button id="exporterNotes" type="button">Exporter les notes (.csv)</button>
+<button id="sauvegarderDonnees" type="button">Sauvegarder les données (.json)</button>
+</div><div class="restaurer">
+<label for="restaurerDonnees">Restaurer une sauvegarde JSON</label>
+<input accept=".json,application/json" id="restaurerDonnees" type="file"/>
+</div><p class="aide" id="messageSauvegarde">Les données sont conservées localement dans ce navigateur, sans serveur et sans base de données. Faites régulièrement une sauvegarde JSON pour éviter toute perte.</p></details>
+<div class="step-navigation"><a class="next-step" href="#absences">Étape suivante<span aria-hidden="true">→</span></a></div></section>
+<section aria-hidden="true" aria-labelledby="heading-absences" class="workspace-section absences-card" data-section="absences" hidden="" id="absences">
+<h2 id="heading-absences"><span aria-hidden="true" class="etape">6</span>Tableau de bord des absences</h2>
+<p>Visualisez les absences et retards déjà saisis dans <strong>Discipline</strong>. Les données sont lues dans les dossiers de l'année scolaire sélectionnée, sans modifier les notes.</p>
+<div class="absence-toolbar">
+  <div><label for="absenceFiliere">Filière</label><select id="absenceFiliere"><option value="">Toutes les filières</option></select></div>
+  <div><label for="absenceGroupe">Groupe</label><select id="absenceGroupe"><option value="">Tous les groupes</option></select></div>
+  <div><label for="absenceRecherche">Rechercher</label><input id="absenceRecherche" type="search" placeholder="Nom, prénom ou CEF" /></div>
+  <div><label for="absenceSituation">Afficher</label><select id="absenceSituation"><option value="tous">Tous les stagiaires</option><option value="absents">Avec absences</option><option value="sans">Sans absence</option></select></div>
+  <div><label for="absenceDateDebut">Du</label><input id="absenceDateDebut" type="date" /></div>
+  <div><label for="absenceDateFin">Au</label><input id="absenceDateFin" type="date" /></div>
+</div>
+<p class="absence-scope" id="absencePeriode" role="status">Année scolaire : —</p>
+<div class="absence-metrics" aria-label="Statistiques des absences">
+  <div class="absence-metric"><span>Stagiaires affichés</span><strong id="absenceKpiStagiaires">0</strong></div>
+  <div class="absence-metric"><span>Stagiaires absents</span><strong id="absenceKpiConcernes">0</strong></div>
+  <div class="absence-metric"><span>Absences (séances)</span><strong id="absenceKpiSeances">0</strong></div>
+  <div class="absence-metric"><span>Heures d'absence</span><strong id="absenceKpiHeures">0 h</strong></div>
+  <div class="absence-metric"><span>Retards</span><strong id="absenceKpiRetards">0</strong></div>
+</div>
+<div class="absence-panels">
+  <div class="absence-panel">
+    <h3>Absences par groupe</h3>
+    <div id="absenceGraphique" class="absence-graph" role="list" aria-label="Nombre de séances d'absence par groupe"><p class="absence-vide">Aucune absence enregistrée pour cette sélection.</p></div>
+  </div>
+  <div class="absence-panel absence-explainer">
+    <h3>Comprendre les chiffres</h3>
+    <p>1 séance = 2,5 heures. Une absence d'une journée correspond à 2 séances (5 heures). Les retards sont comptés séparément.</p>
+    <p>Pour enregistrer ou annuler un événement, ouvrez la section <strong>Discipline</strong>. Les statistiques se mettent à jour ensuite.</p>
+    <a href="#discipline" class="absence-shortcut">Enregistrer une absence <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+<div class="absence-table-header"><h3>Détail par stagiaire</h3><button type="button" id="absenceExportCsv">Exporter le tableau (.csv)</button></div>
+<div class="tableau absence-table" tabindex="0"><table><thead><tr><th>CEF</th><th>Nom et prénom</th><th>Filière</th><th>Groupe</th><th>Séances</th><th>Heures</th><th>Retards</th><th>Dernière absence</th><th>Détails</th></tr></thead><tbody id="absenceTableCorps"><tr><td colspan="9">Importez une liste de stagiaires pour afficher le tableau.</td></tr></tbody></table></div>
+<div id="absenceDetails" class="absence-details" aria-live="polite" hidden=""><div class="absence-details-header"><h3 id="absenceDetailsTitre">Historique</h3><button id="absenceFermerDetails" type="button" class="absence-close">Fermer</button></div><div id="absenceDetailsContenu"></div></div>
+<div class="step-navigation"><a class="next-step" href="#conseil">Étape suivante<span aria-hidden="true">→</span></a></div>
+</section>
+<section aria-hidden="true" aria-labelledby="heading-conseil" class="workspace-section conseil-card" data-section="conseil" hidden="" id="conseil">
+<h2 id="heading-conseil"><span aria-hidden="true" class="etape">7</span>Conseil disciplinaire</h2>
+<p>Choisissez un stagiaire et remplissez manuellement les informations du conseil.</p>
+<div class="champs">
+<div>
+<label for="stagiaireConseil">Stagiaire concerné</label>
+<select id="stagiaireConseil"><option value="">Importer une liste d'abord</option></select>
+</div>
+<div>
+<label for="dateConseil">Date du conseil</label>
+<input id="dateConseil" type="date"/>
+</div>
+<div>
+<label for="presenceConseil">Présence au conseil</label>
+<select id="presenceConseil">
+<option value="">Non précisée</option>
+<option value="حاضر(ة)">Présent(e)</option>
+<option value="غائب(ة)">Absent(e)</option>
+</select>
+</div>
+<div>
+<label for="heuresAbsence">Heures d'absence non justifiées (facultatif)</label>
+<input id="heuresAbsence" placeholder="Ex. 67" type="text"/>
+</div>
+<div>
+<label for="referenceConseil">Référence (facultatif)</label>
+<input id="referenceConseil" placeholder="Référence du PV"/>
+</div>
+</div>
+<div class="champs-textes council-textareas">
+<div>
+<label for="faitsConseil">Faits reprochés / أسباب المجلس (facultatif)</label>
+<textarea id="faitsConseil" placeholder="Décrire les faits constatés" rows="3"></textarea>
+</div>
+<div>
+<label for="decisionConseil">Décision du conseil / قرار المجلس</label>
+<textarea id="decisionConseil" placeholder="Décision décidée par les membres du conseil (ne pas inventer de sanction)" rows="3"></textarea>
+</div>
+<div>
+<label for="observationsConseil">Observations / ملاحظات</label>
+<textarea id="observationsConseil" placeholder="Observations facultatives" rows="2"></textarea>
+</div>
+<div>
+<label for="membresConseil">Membres du conseil (un nom par ligne)</label>
+<textarea id="membresConseil" placeholder="Nom 1
+Nom 2
+Nom 3" rows="4"></textarea>
+</div>
+</div>
+<div class="boutons">
+<button id="boutonConseil">Imprimer le PV du conseil disciplinaire</button>
+</div>
 
-            <main>
-                <!-- Étape 1 : importer une liste Excel -->
-                <section>
-                    <h2>1. Importer les stagiaires</h2>
-                    <p>Choisissez un fichier Excel avec les noms, prénoms, CEF et groupes.</p>
-                    <input type="file" id="fichierExcel" accept=".xlsx,.xls,.csv">
-                    <p id="message">Aucun fichier importé.</p>
-                </section>
-
-                <!-- Étape 2 : choisir un groupe et saisir l'examen -->
-                <section>
-                    <h2>2. Informations de l'examen</h2>
-
-                    <div class="champs">
-                        <div>
-                            <label for="filiere">Filière</label>
-                            <select id="filiere">
-                                <option value="">Choisir une filière</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="groupe">Groupe</label>
-                            <select id="groupe">
-                                <option value="">Choisir un groupe</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="typeExamen">Type d'examen</label>
-                            <select id="typeExamen">
-                                <option value="EFF">Examen de Fin de Formation (EFF)</option>
-                                <option value="EFM">Examen de Fin de Module (EFM)</option>
-                                <option value="CC">Contrôle Continu (CC)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="annee">Année de formation</label>
-                            <input type="text" id="annee" value="2025-2026">
-                        </div>
-                        <div>
-                            <label for="session">Session</label>
-                            <input type="text" id="session" value="Juin 2026">
-                        </div>
-                        <div>
-                            <label for="niveau">Niveau (facultatif)</label>
-                            <input type="text" id="niveau" placeholder="Ex. Technicien spécialisé">
-                        </div>
-                        <div>
-                            <label for="dateExamen">Date de l'examen</label>
-                            <input type="date" id="dateExamen">
-                        </div>
-                        <div>
-                            <label for="heure">Heure</label>
-                            <input type="text" id="heure" placeholder="Ex. 08H30">
-                        </div>
-                        <div>
-                            <label for="salle">Salle / Atelier</label>
-                            <input type="text" id="salle" placeholder="Ex. Salle 02">
-                        </div>
-                        <div>
-                            <label for="epreuve">Épreuve / Module</label>
-                            <input type="text" id="epreuve" placeholder="Ex. Synthèse">
-                        </div>
-                        <div>
-                            <label for="etablissement">Établissement</label>
-                            <input type="text" id="etablissement" value="CMFP AGADIR">
-                        </div>
-                        <div>
-                            <label for="recherche">Rechercher un stagiaire</label>
-                            <input type="text" id="recherche" placeholder="Nom, prénom ou CEF">
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Étape 3 : afficher la liste -->
-                <section>
-                    <h2>3. Liste des stagiaires (<span id="nombre">0</span>)</h2>
-                    <div class="tableau">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>CEF</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>CNI</th>
-                                    <th>Filière</th>
-                                    <th>Groupe</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listeStagiaires"></tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- Étape 4 : générer et imprimer -->
-                <section>
-                    <h2>4. Générer les documents</h2>
-                    <p>Après avoir choisi un groupe et les informations de l'examen :</p>
-                    <div class="boutons">
-                        <button id="boutonConvocations">Imprimer les convocations</button>
-                        <button id="boutonPresences">Imprimer la feuille de présence</button>
-                        <button id="boutonAffichage">Imprimer la liste d'affichage</button>
-                    </div>
-                    <p class="aide">Dans la fenêtre d'impression, choisissez « Enregistrer au format PDF » pour obtenir un PDF.</p>
-                </section>
-            </main>
-        </div>
-
-        <!-- Les documents sont placés ici juste avant l'impression -->
-        <div id="zoneImpression"></div>
-    </body>
+</section>
+</main>
+</div>
+<div id="zoneImpression"></div>
+</body>
 </html>

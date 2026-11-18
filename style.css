@@ -1,236 +1,94 @@
-/* 1. Style général du site */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #233040;
-    background: #f3f6fa;
-}
-
-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 22px;
-    background: #12515b;
-    color: white;
-}
-
-header img {
-    width: 68px;
-    height: 68px;
-    object-fit: contain;
-    border-radius: 50%;
-}
-
-header h1 {
-    margin: 0 0 5px;
-}
-
-header p {
-    margin: 0;
-}
-
-main {
-    max-width: 1050px;
-    margin: 25px auto;
-    padding: 0 15px;
-}
-
-section {
-    background: white;
-    padding: 23px;
-    margin-bottom: 18px;
-    border-radius: 9px;
-    border: 1px solid #dde5ea;
-}
-
-h2 {
-    margin-top: 0;
-    font-size: 21px;
-}
-
-/* 2. Formulaire */
-.champs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 7px;
-}
-
-input, select, button {
-    font: inherit;
-}
-
-input:not([type="file"]), select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #bdcbd3;
-    border-radius: 5px;
-    background: white;
-}
-
-input[type="file"] {
-    max-width: 100%;
-}
-
-#message, .aide {
-    color: #5b6b77;
-    font-size: 14px;
-}
-
-/* 3. Tableau et boutons */
-.tableau {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 9px;
-    text-align: left;
-    border: 1px solid #cbd5dc;
-}
-
-th {
-    background: #e9f0f2;
-}
-
-.boutons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-button {
-    padding: 11px 15px;
-    background: #12515b;
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #0b3941;
-}
-
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #233040; background: #f3f6fa; }
+header { display: flex; align-items: center; gap: 16px; padding: 20px; background: #12515b; color: white; }
+header img { width: 65px; height: 65px; object-fit: contain; }
+header h1 { margin: 0 0 5px; }
+header p { margin: 0; }
+main { max-width: 1050px; margin: 25px auto; padding: 0 15px; }
+section { background: white; padding: 23px; margin-bottom: 18px; border: 1px solid #dde5ea; border-radius: 9px; }
+h2 { margin-top: 0; }
+.champs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.champs-textes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 18px 0; }
+label { display: block; margin-bottom: 7px; font-weight: bold; }
+input, select, textarea, button { font: inherit; }
+input:not([type="file"]), select, textarea { width: 100%; padding: 10px; border: 1px solid #bdcbd3; border-radius: 5px; background: white; }
+textarea { resize: vertical; }
+input[type="file"] { max-width: 100%; }
+.aide { color: #5b6b77; font-size: 14px; line-height: 1.6; }
+.tableau { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 9px; text-align: left; border: 1px solid #cbd5dc; }
+th { background: #e9f0f2; }
+.boutons { display: flex; flex-wrap: wrap; gap: 10px; }
+button { padding: 11px 15px; border: none; border-radius: 5px; color: white; background: #12515b; cursor: pointer; }
+button:hover { background: #0b3941; }
 @media (max-width: 750px) {
-    .champs {
-        grid-template-columns: 1fr;
-    }
+    .champs, .champs-textes { grid-template-columns: 1fr; }
 }
+#zoneImpression { display: none; }
+.feuille { padding: 10mm 11mm; background: white; color: black; font-family: Arial, sans-serif; }
+.feuille h2, .feuille h3 { text-align: center; }
+.feuille table { font-size: 11px; table-layout: fixed; }
+.feuille th, .feuille td { padding: 6px 4px; border: 1px solid black; text-align: center; overflow-wrap: anywhere; }
+.feuille th { background: white; }
+.feuille .entete-document { text-align: center; margin-bottom: 20px; }
+.feuille .entete-document img.logo { width: 60px; vertical-align: middle; }
+.feuille .entete-document img.arabe { display: block; width: 270px; max-width: 85%; margin: 6px auto; }
+.feuille .message-arabe { font-size: 20px; text-align: center; line-height: 1.8; margin: 30px 0; }
+.feuille .reglement { text-align: right; font-size: 14px; line-height: 1.65; margin-top: 28px; }
+.feuille .reglement ul { padding-right: 18px; }
+.pv-ff .petit-entete { margin-top: 10px; font-size: 19px; font-weight: bold; }
+.pv-ff h2 { margin-top: 6px; font-size: 18px; }
+.pv-ff .droite { text-align: right; margin: 16px 0; }
+.pv-ff .ligne-session { display: flex; justify-content: space-between; gap: 20px; margin: 22px 0 20px; }
+.pv-ff .table-meta th, .pv-ff .table-meta td { font-size: 10px; padding: 7px 3px; }
+.pv-ff h3 { font-size: 15px; margin: 25px 0 8px; }
+.pv-ff .table-presence-ff th { height: 44px; font-size: 10px; }
+.pv-ff .table-presence-ff td { height: 8mm; font-size: 10px; }
+.pv-affichage h2 { font-size: 20px; margin: 0 0 12px; }
+.pv-affichage .aff-annee { font-weight: bold; }
+.pv-affichage .aff-infos { margin: 28px 0 22px; }
+.pv-affichage .aff-infos p { display: flex; justify-content: space-between; gap: 15px; }
+.pv-affichage .table-affichage td { height: 7.4mm; }
+.pv-affichage .table-affichage th { font-size: 12px; }
 
-/* 4. Modèles de documents à imprimer */
-#zoneImpression {
-    display: none;
-}
+.pv-module h2 { margin: 12px 0 20px; font-size: 18px; }
+.pv-module .module-infos { margin: 15px 0; font-size: 13px; }
+.pv-module .table-module th { font-size: 10px; height: 42px; }
+.pv-module .table-module td { height: 8mm; font-size: 10px; }
 
-.feuille {
-    padding: 12mm 13mm;
-    font-family: Arial, sans-serif;
-    color: black;
-    background: white;
-}
+.pv-conseil { font-family: Arial, Tahoma, sans-serif; font-size: 16px; line-height: 1.8; }
+.pv-conseil .conseil-haut { display: flex; justify-content: space-between; gap: 35px; font-size: 13px; line-height: 1.7; }
+.pv-conseil .conseil-haut div { flex: 1; }
+.pv-conseil h2 { margin: 44px 0 26px; font-size: 20px; }
+.pv-conseil .conseil-paragraphe { text-align: justify; margin: 22px 0; }
+.pv-conseil .conseil-faits { margin: 20px 25px; min-height: 40px; }
+.pv-conseil .conseil-decision { margin: 22px 25px; min-height: 50px; }
+.pv-conseil .conseil-membres { margin-top: 36px; }
+.pv-conseil .conseil-membres p { margin: 8px 0; }
+.pv-conseil .conseil-bas { margin-top: 45px; text-align: left; font-size: 13px; }
 
-.entete-document {
-    text-align: center;
-    margin-bottom: 22px;
-}
-
-.entete-document img.logo {
-    width: 70px;
-    vertical-align: middle;
-}
-
-.entete-document img.arabe {
-    width: 290px;
-    max-width: 80%;
-    display: block;
-    margin: 6px auto;
-}
-
-.feuille h2, .feuille h3 {
-    text-align: center;
-}
-
-.feuille table {
-    font-size: 12px;
-}
-
-.feuille th, .feuille td {
-    border: 1px solid black;
-    padding: 7px;
-}
-
-.feuille th {
-    background: #eeeeee;
-}
-
-.feuille .message-arabe {
-    direction: rtl;
-    text-align: center;
-    font-size: 21px;
-    line-height: 1.9;
-    margin: 33px 4px;
-}
-
-.feuille .reglement {
-    direction: rtl;
-    text-align: right;
-    line-height: 1.7;
-    font-size: 14px;
-    margin-top: 26px;
-}
-
-.feuille .signature {
-    height: 30px;
-}
-
-.infos-examen {
-    margin: 15px 0;
-    line-height: 1.8;
-}
-
-/* 5. Impression (ou PDF par le navigateur) */
 @media print {
-    @page {
-        size: A4;
-        margin: 0;
-    }
-
-    body {
-        background: white;
-    }
-
-    .application {
-        display: none;
-    }
-
-    #zoneImpression {
-        display: block;
-    }
-
-    .feuille {
-        width: 210mm;
-        min-height: 296mm;
-        page-break-after: always;
-        break-after: page;
-    }
-
-    .feuille:last-child {
-        page-break-after: auto;
-        break-after: auto;
-    }
+    @page { size: A4 portrait; margin: 0; }
+    body { background: white; }
+    .application { display: none; }
+    #zoneImpression { display: block; }
+    .feuille { width: 210mm; min-height: 296mm; page-break-after: always; break-after: page; }
+    .feuille:last-child { page-break-after: auto; break-after: auto; }
+    .feuille table tr { break-inside: avoid; page-break-inside: avoid; }
 }
+
+.resume-discipline { margin: 20px 0; padding: 18px; border: 1px solid #bdd6cd; border-radius: 8px; background: #eff8f4; }
+.resume-discipline > div { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.resume-discipline .libelle-note { font-weight: bold; }
+.resume-discipline strong { font-size: 29px; color: #12515b; }
+.resume-discipline p { margin-bottom: 0; line-height: 1.6; }
+#sectionDiscipline h3 { margin-top: 24px; }
+.historique { padding: 12px; border: 1px solid #dde5ea; border-radius: 6px; }
+.evenement { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #e5ecef; }
+.evenement:last-child { border-bottom: 0; }
+button.supprimer { background: #8b3641; padding: 7px 11px; font-size: 13px; }
+button.supprimer:hover { background: #61252d; }
+.barre-sauvegarde { margin-top: 18px; }
+.restaurer { margin-top: 18px; }
+@media (max-width: 550px) { .evenement { flex-direction: column; align-items: flex-start; } }

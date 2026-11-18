@@ -1,0 +1,306 @@
+:root {
+    --sidebar: #20252b;
+    --sidebar-largeur: 252px;
+    --primary-color: #00a6a6;
+    --primary-hover: #008c8c;
+    --secondary-color: #e58f27;
+    --marine: #1a2e5c;
+    --fond: #f8f8f8;
+    --gris-label: #6b7078;
+    --bordure: #dcdfe4;
+    --card-shadow: 0 5px 23px rgba(26, 46, 92, .07);
+}
+html {scroll-behavior: smooth;}
+body {font-family: "Segoe UI", Helvetica, Arial, sans-serif; background: var(--fond); color: #253245; min-height: 100vh;}
+.application { min-height: 100vh; padding-left: var(--sidebar-largeur); }
+.application *, .application *::before, .application *::after {box-sizing: border-box;}
+[hidden] {display: none !important;}
+
+.application .navBar {
+    position: fixed; inset: 0 auto 0 0; width: var(--sidebar-largeur);
+    background: var(--sidebar); color: #fff; padding: 27px 15px 18px;
+    display: flex; flex-direction: column; overflow-y: auto; z-index: 25;
+    box-shadow: 3px 0 18px rgba(5,14,24,.12);
+}
+.application .brand {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 2px; color: white; text-decoration: none; padding: 2px 0 32px;
+}
+.application .brand-logo {width: 102px; height: 102px; object-fit: contain; border-radius: 50%;}
+.application .brand-title {font-size: 20px; font-weight: 800; letter-spacing: 2px; margin-top: 4px;}
+.application .brand-caption {color: #c0c7cf; font-size: 12px; letter-spacing: .03em;}
+.application .nav-group-label {
+    color: #8b96a4; font-size: 10px; font-weight: 800; letter-spacing: 1.7px;
+    padding: 9px 14px 12px;
+}
+.application .navBar nav ul {list-style: none; display: flex; flex-direction: column; padding: 0; margin: 0; gap: 5px;}
+.application .navBar nav li {margin:0;}
+.application .navBar nav a {
+    display: flex; align-items: center; gap: 12px; color: #d4d8de;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    padding: 12px 14px; border-radius: 999px;
+    transition: background .16s ease, color .16s ease, transform .16s ease;
+    white-space: nowrap;
+}
+.application .navBar nav a:hover {background: rgba(255,255,255,.085); color: white;}
+.application .navBar nav a[aria-current="page"] {background: var(--primary-color); color:white; box-shadow: 0 3px 10px rgba(0,166,166,.16);}
+.application .nav-number {
+    display: inline-flex; align-items:center; justify-content:center;
+    width: 23px; height: 23px; flex: 0 0 23px; border-radius: 50%;
+    background: rgba(255,255,255,.1); font-size: 10px; font-weight: 800; letter-spacing: .4px;
+}
+.application .navBar nav a[aria-current="page"] .nav-number {background: rgba(255,255,255,.22);}
+.application .sidebar-note {
+    color: #9ea7b3; font-size: 11px; line-height: 1.6;
+    margin: auto 12px 0; padding-top: 34px;
+}
+
+.application .page-header {
+    color: #233040; background: transparent; display:flex; align-items: center;
+    justify-content: space-between; gap: 24px;
+    max-width: 1300px; padding: 0; margin: 0 auto 28px;
+}
+.application .page-header .eyebrow {
+    color: var(--primary-hover); font-size: 11px; font-weight: 800;
+    letter-spacing: 1.6px; text-transform: uppercase; margin: 0 0 10px;
+}
+.application .page-header h1 {font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; color: var(--marine); margin: 0 0 10px; font-weight: 750;}
+.application .page-header p:not(.eyebrow) {font-size: 14px; line-height: 1.6; max-width: 760px; color: var(--gris-label); margin: 0;}
+.application .page-progress {
+    border: 1px solid var(--bordure); border-radius: 18px; background: white;
+    padding: 13px 20px; min-width: 118px; text-align: center; flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(26,46,92,.04);
+}
+.application .progress-label {font-size: 10px; letter-spacing: 1.7px; color: var(--gris-label); display:block; font-weight: 800;}
+.application #pageCompteur {font-size: 24px; font-weight: 800; color: var(--primary-hover); letter-spacing: -.5px;}
+.application .progress-divider {font-size: 14px; color: #a1aab5; font-weight: 500;}
+.application .workspace {max-width: 1370px; margin: 0 auto; padding: 39px clamp(20px, 4.1vw, 62px) 62px;}
+
+.application .workspace-section {
+    max-width: 1300px; margin: 0; padding: 29px clamp(20px, 3vw, 37px) 32px;
+    background: #fff; border: 1px solid #ecedef;
+    border-top: 5px solid var(--primary-color); border-radius: 22px;
+    box-shadow: var(--card-shadow); animation: section-in .17s ease both;
+}
+.application .workspace-section.documents-card {border-top-color: var(--secondary-color);}
+.application .workspace-section h2 {
+    display: flex; align-items: center; gap: 12px;
+    font-size: clamp(19px, 1.8vw, 23px); font-weight: 750;
+    color: var(--marine); line-height:1.35; margin: 0 0 20px;
+}
+.application .etape {
+    background: var(--secondary-color); color: #fff; width: 32px; height: 32px;
+    flex-shrink: 0; display:inline-flex; align-items:center; justify-content:center;
+    border-radius: 50%; font-size: 13px; font-weight: 800;
+}
+.application .workspace-section > p {line-height: 1.65; color: var(--gris-label); margin: 0 0 20px; font-size: 14px;}
+.application .workspace-section > p.aide {margin: 18px 0 0;}
+
+.application .welcome-guide {display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 13px; margin: 0 0 26px;}
+.application .guide-card {display:flex; gap: 11px; align-items: flex-start; padding: 15px 14px; border-radius: 14px; background: #f5f9fa; border: 1px solid #eaf0f2;}
+.application .guide-num {font-size: 12px; font-weight: 800; color: var(--primary-hover); background: #daf2ef; width: 31px; height: 31px; display: inline-flex; align-items:center; justify-content:center; flex-shrink:0; border-radius: 9px;}
+.application .guide-card strong {color: var(--marine); font-size: 13px;}
+.application .guide-card p {font-size: 12px; line-height:1.55; margin: 5px 0 0; color: var(--gris-label);}
+.application .file-field {padding: 20px; background: #fafcfc; border: 2px dashed #cbdedc; border-radius: 16px;}
+.application input[type="file"] {font-size: 14px; max-width: 100%; color: var(--gris-label); cursor: pointer;}
+.application input[type="file"]::file-selector-button {
+    font: inherit; font-weight:700; padding: 11px 18px; border: 0; border-radius: 999px;
+    background: var(--primary-color); color:#fff; cursor:pointer; margin-right: 16px;
+}
+.application input[type="file"]::file-selector-button:hover {background:var(--primary-hover);}
+.application #message {margin: 16px 0 0; padding: 13px 16px; border-left: 3px solid var(--primary-color); border-radius: 7px; background: #eef9f8; color: #386067;}
+
+.application .champs {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:21px 17px;}
+.application .champs-textes {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; margin: 21px 0;}
+.application .champs > div, .application .champs-textes > div {min-width:0;}
+.application .workspace-section label {
+    display:block; margin: 0 0 7px 12px; color: var(--gris-label);
+    font-size: 11px; font-weight: 750; letter-spacing: .45px; line-height:1.6;
+    text-transform: uppercase;
+}
+.application .workspace-section input:not([type="file"]),
+.application .workspace-section select,
+.application .workspace-section textarea {
+    width:100%; min-width:0; font: inherit; font-size: 14px; color: #26313d;
+    background: #fff; border: 1px solid var(--bordure); border-radius: 999px;
+    padding: 12px 17px; min-height: 45px; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+.application .workspace-section textarea {border-radius: 15px; min-height: 105px; resize: vertical; line-height:1.5;}
+.application .workspace-section input:focus-visible,
+.application .workspace-section textarea:focus-visible,
+.application .workspace-section select:focus-visible,
+.application .workspace-section button:focus-visible,
+.application .workspace-section a:focus-visible {
+    border-color: var(--primary-color); outline: 2px solid rgba(0,166,166,.36); outline-offset: 2px;
+}
+.application .workspace-section select {cursor:pointer;}
+
+.application .tableau {max-height: min(58vh, 490px); overflow:auto; border: 1px solid #e6e9ed; border-radius: 16px; margin-top: 8px;}
+.application .tableau:focus-visible {outline: 2px solid var(--primary-color); outline-offset: 3px;}
+.application .tableau table {border-collapse:separate; border-spacing:0; font-size: 13px; min-width: 645px; width:100%;}
+.application .tableau th {position:sticky; top:0; z-index:1; background:#eaf6f6; color:var(--marine); padding: 13px 14px; border:0; border-bottom: 1px solid #dce9e8; font-size: 11px; letter-spacing:.5px; text-transform:uppercase; white-space:nowrap;}
+.application .tableau td {padding:12px 14px; border:0; border-bottom:1px solid #eff1f4; background:white;}
+.application .tableau tbody tr:nth-child(even) td {background: #f8fbfb;}
+.application .tableau tbody tr:hover td {background: #e6f5f5;}
+.application .tableau tbody tr:last-child td {border-bottom:0;}
+.application .students-card .tableau {min-height: 140px;}
+
+.application .boutons {display:flex; flex-wrap:wrap; align-items:center; gap: 12px; margin-top: 16px;}
+.application .workspace-section button,
+.application .next-step {
+    font:inherit; font-size: 13px; font-weight: 750; letter-spacing:.01em;
+    cursor:pointer; background: var(--primary-color); color:#fff;
+    border:0; border-radius:999px; padding: 12px 20px; min-height:44px;
+    transition: background .15s ease, transform .12s ease;
+}
+.application .workspace-section button:hover,.application .next-step:hover {background: var(--primary-hover);}
+.application .workspace-section button:active,.application .next-step:active {transform: translateY(1px);}
+.application .documents-card .boutons button:nth-child(3),
+.application .documents-card .boutons button:nth-child(2) {background: var(--secondary-color);}
+.application .documents-card .boutons button:nth-child(3):hover,
+.application .documents-card .boutons button:nth-child(2):hover {background: #cf7d1c;}
+.application .workspace-section button.supprimer {background:#993e49; padding: 8px 12px; min-height:35px; font-size:12px;}
+.application .workspace-section button.supprimer:hover {background:#74303a;}
+.application .workspace-section button:disabled {opacity:.55; cursor:not-allowed;}
+.application .aide {font-size: 13px; color: var(--gris-label); line-height:1.65;}
+.application .step-navigation {display:flex; justify-content: flex-end; margin: 28px 0 0; padding-top: 19px; border-top: 1px solid #eef0f2;}
+.application .next-step {display:inline-flex; align-items:center; text-decoration:none; gap: 14px;}
+.application .next-step span {font-size:19px; font-weight:400; line-height:0;}
+.application .document-help {padding:13px 17px; background:#fff8ed; border-radius:12px; border:1px solid #f3e3c8; margin-top:22px !important; color:#6d5a3d !important;}
+
+.application .resume-discipline {
+    border:1px solid #d5e9e6; border-radius: 17px; background:#eff8f6;
+    margin: 24px 0 25px; padding: 19px 22px;
+}
+.application .resume-discipline > div {display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+.application .resume-discipline .libelle-note {font-weight:750; color:var(--marine);}
+.application .resume-discipline strong {color:var(--primary-hover); font-size:32px;}
+.application .resume-discipline p {color:#52696e; margin: 5px 0 0; font-size:13px;}
+.application .discipline-card > h3 {font-size:16px; margin: 26px 0 0; color: var(--marine);}
+.application .subsection-disclosure {border: 1px solid var(--bordure); border-radius:15px; margin-top: 14px; background:#fff; overflow:hidden;}
+.application .subsection-disclosure summary {
+    cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding: 17px 19px; color:var(--marine); list-style:none; user-select:none;
+}
+.application .subsection-disclosure summary::-webkit-details-marker {display:none;}
+.application .subsection-disclosure summary::after {content:'+'; font-size:22px; font-weight:500; color:var(--primary-hover); margin-left: auto;}
+.application .subsection-disclosure[open] summary::after {content:'−';}
+.application .subsection-disclosure summary:hover {background:#f4f9f9;}
+.application .subsection-disclosure summary:focus-visible {outline:2px solid var(--primary-color); outline-offset:-3px;}
+.application .disclosure-title {font-size:14px; font-weight:750;}
+.application .disclosure-helper {font-size:11px; color:var(--gris-label); margin-left:auto; text-align:right;}
+.application .subsection-disclosure > :not(summary) {margin-left: 18px; margin-right:18px;}
+.application .subsection-disclosure > :last-child {margin-bottom: 18px;}
+.application .subsection-disclosure .tableau {margin-top:0;}
+.application .subsection-disclosure .historique {border:0; padding:8px 3px; color:var(--gris-label);}
+.application .subsection-disclosure .barre-sauvegarde {margin-top:14px;}
+.application .subsection-disclosure .restaurer {margin-top: 22px;}
+.application .subsection-disclosure .restaurer input {margin-top: 8px;}
+.application .evenement {display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #e5ecef;}
+
+@keyframes section-in {from {opacity:.5; transform:translateY(4px);} to {opacity:1; transform:translateY(0);}}
+@media (max-width: 1190px) {
+    .application .champs {grid-template-columns: repeat(2,minmax(0,1fr));}
+    .application .welcome-guide {grid-template-columns:1fr;}
+    .application .guide-card {align-items:center;}
+}
+@media (max-width: 920px) {
+    .application {padding-left:0;}
+    .application .navBar {
+        position:sticky; inset:auto; top:0; width:100%; padding:6px 15px 9px;
+        gap:0; overflow:visible;
+    }
+    .application .brand {flex-direction:row; align-items:center; gap:9px; padding: 1px 0 6px; text-align:left; width:max-content;}
+    .application .brand-logo {width:39px; height:39px;}
+    .application .brand-title {font-size:16px; margin:0;}
+    .application .brand-caption {display:none;}
+    .application .nav-group-label,.application .sidebar-note {display:none;}
+    .application .navBar nav {overflow-x:auto; scrollbar-width:thin; padding-bottom:1px;}
+    .application .navBar nav ul {flex-direction:row; width:max-content; min-width:100%; gap:6px;}
+    .application .navBar nav a {padding: 9px 12px; font-size:12px; gap:6px;}
+    .application .nav-number {width:20px; height:20px; flex-basis:20px; font-size:9px;}
+    .application .workspace {padding:26px 18px 42px;}
+    .application .page-header {margin-bottom:21px;}
+}
+@media (max-width: 630px) {
+    .application .workspace {padding:20px 12px 30px;}
+    .application .workspace-section {border-radius:17px; padding:22px 17px;}
+    .application .page-header {align-items:flex-start; gap:8px;}
+    .application .page-header h1 {font-size:23px;}
+    .application .page-header p:not(.eyebrow) {font-size:12px;}
+    .application .page-progress {min-width:69px; border-radius:11px; padding:10px 7px;}
+    .application .progress-label {font-size:8px; letter-spacing:1px;}
+    .application #pageCompteur {font-size:17px;}
+    .application .progress-divider {font-size:10px;}
+    .application .champs, .application .champs-textes {grid-template-columns:1fr; gap:15px;}
+    .application .welcome-guide {gap:8px;}
+    .application .guide-card {padding:10px 12px;}
+    .application .disclosure-helper {display:none;}
+    .application .workspace-section .boutons button {width:100%;}
+    .application .next-step {font-size:12px;}
+    .application .file-field {padding:13px;}
+    .application .workspace-section h2 {font-size:19px;}
+}
+@media (prefers-reduced-motion: reduce) {
+    html {scroll-behavior: auto;}
+    .application *, .application *::after {animation: none !important; transition: none !important;}
+}
+@media print {
+    .application {display:none !important; padding-left:0 !important;}
+    #zoneImpression {display:block;}
+    body {background:white;}
+}
+
+.application .absences-card > p {margin-bottom:16px;}
+.application .absence-toolbar {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; padding:20px; border:1px solid #e3ecec; background:#f7fbfb; border-radius:17px; margin-bottom:16px;}
+.application .absence-toolbar > div {min-width:0;}
+.application .absence-toolbar label {margin-left:2px;}
+.application .absence-toolbar select,.application .absence-toolbar input {width:100%; height:42px; min-width:0; border:1px solid #d8e3e5; border-radius:11px; padding:8px 11px; background:white; color:#263445; font:inherit; font-size:13px;}
+.application .absence-toolbar select:focus-visible,.application .absence-toolbar input:focus-visible {outline:2px solid var(--primary-color); outline-offset:1px;}
+.application .absence-scope {color:#647581; font-size:12px; margin:0 0 20px !important;}
+.application .absence-metrics {display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:0 0 22px;}
+.application .absence-metric {min-width:0; padding:18px 14px; background:#f7fbfa; border:1px solid #e2edeb; border-radius:15px; display:flex; flex-direction:column; gap:10px;}
+.application .absence-metric span {font-size:12px; font-weight:650; color:#697c80; line-height:1.45;}
+.application .absence-metric strong {font-size:clamp(22px,2.3vw,30px); color:var(--marine); font-weight:800; line-height:1.2;}
+.application .absence-panels {display:grid; grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr); gap:14px; margin:0 0 25px;}
+.application .absence-panel {padding:19px 20px; border:1px solid #e3e8ed; border-radius:17px; background:#fff; min-width:0;}
+.application .absence-panel h3,.application .absence-table-header h3,.application .absence-details h3 {color:var(--marine); font-size:15px; margin:0 0 15px;}
+.application .absence-graph {display:flex; flex-direction:column; gap:12px;}
+.application .absence-bar-row {display:grid; grid-template-columns:minmax(85px,1fr) minmax(80px,2fr) 40px; align-items:center; gap:11px; font-size:12px; color:#39465a;}
+.application .absence-bar-label {white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600;}
+.application .absence-bar-track {height:13px; border-radius:999px; background:#edf3f4; overflow:hidden;}
+.application .absence-bar-fill {height:100%; border-radius:999px; background:var(--primary-color); min-width:0;}
+.application .absence-bar-number {text-align:right; font-weight:750; color:var(--marine);}
+.application .absence-vide {font-size:13px; color:#7c8995; padding:14px 0; margin:0;}
+.application .absence-explainer {background:#fcfdfd;}
+.application .absence-explainer p {font-size:12px; line-height:1.7; color:#5e6e7b; margin:0 0 13px;}
+.application .absence-shortcut {display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-size:12px; font-weight:750; color:var(--primary-hover); margin-top:2px;}
+.application .absence-shortcut:hover {text-decoration:underline;}
+.application .absence-table-header {display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:12px;}
+.application .absence-table-header h3 {margin:0;}
+.application .absence-table-header button {font-size:12px; min-height:36px; padding:9px 14px;}
+.application .absence-table {margin:0 !important;}
+.application .absence-table table {min-width:900px;}
+.application .absence-table td {white-space:nowrap;}
+.application .absence-table .absence-detail-button {min-height:34px; font-size:11px; padding:7px 11px;}
+.application .absence-details {margin-top:14px; padding:16px 19px; background:#f6faf9; border:1px solid #dcebe9; border-radius:15px;}
+.application .absence-details-header {display:flex; justify-content:space-between; align-items:center; gap:14px;}
+.application .absence-details h3 {margin:0;}
+.application .absence-details .absence-close {font-size:11px; min-height:32px; padding:6px 12px;}
+.application .absence-event-list {padding-left:20px; margin:12px 0 0; color:#4c5b67; font-size:13px; line-height:1.85;}
+@media(max-width:1190px) {
+  .application .absence-metrics {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .application .absence-toolbar {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:690px) {
+  .application .absence-metrics {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .application .absence-panels {grid-template-columns:1fr;}
+  .application .absence-toolbar {padding:13px; gap:11px;}
+}
+@media(max-width:430px) {
+  .application .absence-toolbar {grid-template-columns:1fr;}
+  .application .absence-metrics {gap:8px;}
+  .application .absence-metric {padding:13px 12px;}
+  .application .absence-bar-row {grid-template-columns:72px minmax(40px,1fr) 28px; gap:7px;}
+}
