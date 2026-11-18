@@ -304,3 +304,139 @@ body {font-family: "Segoe UI", Helvetica, Arial, sans-serif; background: var(--f
   .application .absence-metric {padding:13px 12px;}
   .application .absence-bar-row {grid-template-columns:72px minmax(40px,1fr) 28px; gap:7px;}
 }
+
+/* Simplified UI, with original Safa-style upload presentation */
+.application .page-header .eyebrow,
+.application .page-header .page-progress,
+.application #pageDescription,
+.application .welcome-guide,
+.application .document-help,
+.application .absence-explainer { display:none !important; }
+.application .page-header {justify-content:flex-start;}
+.application .page-intro {display:block;}
+.application .page-header h1 {margin-bottom:0;}
+.application .workspace-section h2 [hidden] {display:none !important;}
+
+/* Adapted directly from Safa's upload-box styles, scoped against Abdnor's form rules. */
+.application .workspace-section label.upload-box {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:216px;
+    margin:0;
+    padding:5px 10px;
+    gap:6px;
+    border:2px dashed #b5edfd;
+    border-radius:15px;
+    background:#fdfcfc;
+    color:#6b7785;
+    cursor:pointer;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    font-weight:400;
+    letter-spacing:normal;
+    line-height:normal;
+    text-align:center;
+    text-transform:none;
+    transition:background .3s,border-color .3s;
+}
+.application .workspace-section label.upload-box:hover,
+.application .workspace-section label.upload-box.drag-over {
+    background:#f2f6f6;
+    border-color:#00a9a5;
+}
+.application .workspace-section label.upload-box input {display:none;}
+.application .workspace-section label.upload-box .upload-icon {font-size:40px; line-height:1; color:#276160;}
+.application .workspace-section label.upload-box strong {color:#333; font-size:17px; font-weight:700; letter-spacing:normal; text-transform:none;}
+.application .workspace-section label.upload-box small {color:#888; font-size:13px; font-weight:400; letter-spacing:normal; text-transform:none;}
+.application .workspace-section label.upload-box .upload-btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 22px;
+    background:#00a9a5;
+    color:white;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:400;
+    text-transform:none;
+    letter-spacing:normal;
+}
+.application .workspace-section label.upload-box:hover .upload-btn {background:#29bdb8;}
+.application .workspace-section label.upload-box #message {
+    padding:0;
+    margin:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:#6b7785;
+    font-size:12px;
+    font-weight:400;
+    text-transform:none;
+    letter-spacing:normal;
+    text-align:center;
+    line-height:normal;
+}
+
+/* Keep the students count available to JavaScript but off numbered section headings. */
+.application #heading-stagiaires #nombre[hidden] { display: none !important; }
+
+
+/* Standalone absence dashboard entry (not part of the numbered steps) */
+.application .navBar .sidebar-dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 44px;
+    margin-top: auto;
+    background: var(--secondary-color);
+    color: white;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: .15px;
+    text-decoration: none;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.12);
+}
+.application .navBar .sidebar-dashboard:hover { background: #cf7d1c; }
+.application .navBar .sidebar-dashboard[aria-current="page"] {
+    background: #e58f27;
+    border-color: var(--sidebar);
+    outline: 1px solid white;
+}
+.application .navBar .sidebar-dashboard:focus-visible { outline: 2px solid white; }
+.application .absences-card .absence-panels { grid-template-columns: 1fr; }
+.application .absences-card > h2 { margin-bottom: 26px; }
+@media (max-width: 920px) {
+    .application .navBar .sidebar-dashboard {
+        width: auto;
+        min-height: 37px;
+        padding: 7px 16px;
+        margin: 7px 0 0;
+        font-size: 12px;
+        align-self: flex-start;
+    }
+}
+
+/* Dashboard is its own screen, separate from the six numbered workspaces. */
+.application .dashboard-workspace { min-height: 100vh; }
+.application .dashboard-workspace .dashboard-page-header { margin-bottom: 28px; }
+.application .dashboard-workspace .dashboard-page-header h1 { margin-bottom: 0; }
+
+/* Keep the separate Absences step and the Dashboard screen mutually exclusive. */
+.application .workspace[hidden], .application .workspace-section[hidden] { display: none !important; }
+.application .absences-card[data-section="absences"] .absence-table { margin-top: 0; }
+
+/* Dashboard contains only year label, five statistics and group chart.
+   Keep form/table DOM elements for the existing calculation logic, but hide them. */
+.application #dashboard-screen .dashboard-internal-only { display: none !important; }
+.application #dashboard-screen .absence-panels { margin-bottom: 0; }
+.application #dashboard-screen .absence-scope { margin-bottom: 20px !important; }
+
+

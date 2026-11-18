@@ -117,3 +117,37 @@ element("boutonConseil").addEventListener("click", imprimerConseil);
 
 initialiserDiscipline();
 chargerDonneesLocales();
+
+
+// Support files dropped on the Safa-style uploader as well as the file chooser.
+(function activerGlisserDeposer() {
+    const zone = document.querySelector('label.upload-box');
+    const fichierInput = document.getElementById('fichierExcel');
+    if (!zone || !fichierInput) return;
+
+    for (const type of ['dragenter', 'dragover']) {
+        zone.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            zone.classList.add('drag-over');
+            if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+        });
+    }
+    for (const type of ['dragleave', 'drop']) {
+        zone.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            zone.classList.remove('drag-over');
+        });
+    }
+    zone.addEventListener('drop', event => {
+        const fichiers = event.dataTransfer && event.dataTransfer.files;
+        if (!fichiers || !fichiers.length) return;
+        if (!/\.(xlsx|xls|csv)$/i.test(fichiers[0].name)) {
+            alert('Choisissez un fichier Excel ou CSV.');
+            return;
+        }
+        fichierInput.files = fichiers;
+        fichierInput.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+})();

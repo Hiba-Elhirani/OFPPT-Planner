@@ -1,0 +1,159 @@
+/* OFPPT reference-derived print forms. Scoped to #zoneImpression, so the app UI is unaffected. */
+@page { size:A4 portrait; margin:0; }
+@media print {
+  html, body { margin:0!important; padding:0!important; background:white!important; }
+  body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .application {display:none!important;}
+  #zoneImpression {display:block!important;position:static!important;margin:0!important;padding:0!important;}
+  #zoneImpression .feuille { width:210mm!important; max-width:210mm; min-height:297mm!important; height:297mm; overflow:hidden; page-break-after:always; break-after:page; page-break-inside:avoid; break-inside:avoid; box-sizing:border-box; }
+  #zoneImpression .feuille:last-child {page-break-after:auto;break-after:auto;}
+}
+#zoneImpression .modele-ofppt { padding:10mm 10mm 8mm; font-family:Arial,Helvetica,sans-serif; color:black; font-size:11px; line-height:1.2; }
+#zoneImpression .modele-ofppt * {box-sizing:border-box;}
+#zoneImpression .modele-ofppt table {border-collapse:collapse;table-layout:fixed;width:100%;font-family:inherit; margin:0;}
+#zoneImpression .modele-ofppt th,#zoneImpression .modele-ofppt td {border:1px solid #222; padding:3px 3px; color:#000; overflow-wrap:break-word; text-align:left; background:#fff;}
+#zoneImpression .modele-ofppt h2 {margin:0;font-style:italic;text-align:center;color:#000;}
+/* Common bilingual Excel header + two logos */
+#zoneImpression .modele-en-tete {display:grid;grid-template-columns:28mm 1fr 27mm;align-items:start;min-height:30mm;gap:4mm;background:transparent;color:#000; padding:0;}
+#zoneImpression .modele-en-tete .modele-logo-gauche {display:flex;align-items:flex-start;justify-content:flex-start;min-width:0;}
+#zoneImpression .modele-logo-gauche img {width:18mm;height:16mm;object-fit:contain;}
+#zoneImpression .modele-titres {display:flex; flex-direction:column; align-items:center; gap:1mm; padding-top:1mm; text-align:center;}
+#zoneImpression .modele-titres strong {font-size:15px;font-style:italic;font-weight:800;}
+#zoneImpression .modele-titres span {font-size:12px;font-style:italic;font-weight:700;}
+#zoneImpression .modele-fondation {width:22mm;height:22mm;object-fit:contain;justify-self:end;}
+/* EFF - affichage (xlsx: xxx AFF) */
+#zoneImpression .pv-affichage .aff-details {font-size:11px;font-weight:600;margin:0 0 5mm;min-height:15mm;display:flex;flex-direction:column;justify-content:center;gap:1.3mm;}
+#zoneImpression .pv-affichage .aff-details>div {display:flex;align-items:baseline;justify-content:space-between;gap:4mm;}
+#zoneImpression .pv-affichage .aff-details>div span:first-child {max-width:70%;}
+#zoneImpression .pv-affichage .aff-details b {font-weight:800;}
+#zoneImpression .pv-affichage .aff-liste {font-size:10px;}
+#zoneImpression .pv-affichage .aff-liste thead th {background:#91c4f4!important;color:#000;font-weight:700;line-height:1.3;text-align:center;height:8mm;}
+#zoneImpression .pv-affichage .aff-liste tbody td {height:6.2mm;line-height:1.0; padding:1mm 1.3mm;text-align:left;}
+#zoneImpression .pv-affichage .aff-liste td:first-child {text-align:center;}
+#zoneImpression .pv-affichage.moyennes .aff-liste tbody td {height:5.3mm;}
+#zoneImpression .pv-affichage.nombreuses .aff-liste tbody td {height:4.7mm;font-size:9px;}
+/* EFF - présence (xlsx: sheet without AFF) */
+#zoneImpression .pv-ff {padding-top:8mm;}
+#zoneImpression .ff-logos {display:flex;align-items:center;justify-content:space-between;height:23mm;}
+#zoneImpression .ff-logos img:first-child {width:23mm;height:21mm;object-fit:contain;}
+#zoneImpression .ff-logos img:last-child {width:22mm;height:22mm;object-fit:contain;}
+#zoneImpression .pv-ff h2 {font-size:16px;margin:0 0 1mm;font-style:italic;font-weight:800;}
+#zoneImpression .ff-niveau {text-align:right;font-size:11px;margin:1mm 0 4mm;}
+#zoneImpression .ff-session {display:flex;justify-content:space-between;font-size:12px;margin:0 0 4mm;}
+#zoneImpression .ff-session b {font-size:13px;}
+#zoneImpression .ff-meta {font-size:10px;}
+#zoneImpression .ff-meta th,#zoneImpression .ff-meta td {padding:1.6mm 1mm;text-align:center;}
+#zoneImpression .ff-meta th {font-weight:700;}
+#zoneImpression .ff-presence {font-size:10px;}
+#zoneImpression .ff-presence .ff-liste-titre {font-size:13px; font-weight:800;text-align:center;height:5.8mm;padding:1mm;}
+#zoneImpression .ff-presence thead tr:nth-child(2) th {font-size:9px;line-height:1.2;text-align:center;height:11mm;}
+#zoneImpression .ff-presence thead .ff-nom-col {font-size:14px!important;font-style:italic;}
+#zoneImpression .ff-presence tbody td {height:5.65mm; font-size:9.5px;padding:1mm;text-align:left;}
+#zoneImpression .ff-presence tbody td:nth-child(n+4) {text-align:center;}
+#zoneImpression .pv-ff.moyennes .ff-presence tbody td {height:5.25mm;}
+#zoneImpression .pv-ff.nombreuses .ff-presence tbody td {height:4.15mm; font-size:9px; padding:.5mm 1mm;}
+#zoneImpression .pv-ff.nombreuses .ff-logos {height:17mm;}
+#zoneImpression .pv-ff.nombreuses .ff-meta th,#zoneImpression .pv-ff.nombreuses .ff-meta td {padding:1mm;}
+#zoneImpression .pv-ff.nombreuses .ff-presence thead tr:nth-child(2) th {height:8mm;}
+#zoneImpression .ff-evaluateur {margin-top:8mm;}
+#zoneImpression .ff-evaluateur table {font-size:9px;}
+#zoneImpression .ff-evaluateur th,#zoneImpression .ff-evaluateur td {height:7mm;text-align:center;padding:1mm;}
+#zoneImpression .ff-evaluateur th:nth-child(1){width:20%}
+#zoneImpression .ff-evaluateur th:nth-child(2){width:48%}
+#zoneImpression .ff-evaluateur th:nth-child(3){width:32%}
+#zoneImpression .pv-ff.nombreuses .ff-evaluateur {margin-top:3mm;}
+#zoneImpression .pv-ff.nombreuses .ff-evaluateur th,#zoneImpression .pv-ff.nombreuses .ff-evaluateur td {height:5mm;}
+/* EFM / CC template PV MD101.xlsx */
+#zoneImpression .pv-module .modele-en-tete {min-height:28mm;}
+#zoneImpression .pv-module .modele-titres {align-self:start;}
+#zoneImpression .pv-module h2 {font-size:14px;margin:1mm 0 6mm;}
+#zoneImpression .module-metadata {display:grid;grid-template-columns:65% 35%;margin:0 0 5mm;font-size:11px;line-height:1.3;gap:2mm;min-height:24mm;}
+#zoneImpression .module-metadata div div {min-height:4.5mm;}
+#zoneImpression .module-metadata b {font-weight:800;font-style:italic;}
+#zoneImpression .module-presence {font-size:10px;}
+#zoneImpression .module-presence thead th {height:12mm; padding:1mm; background:#91c4f4!important; font-weight:700; text-align:center;line-height:1.15;}
+#zoneImpression .module-presence tbody td {height:5.7mm;padding:.5mm 1mm;text-align:left;font-size:9px;}
+#zoneImpression .module-presence tbody td:first-child {text-align:center;}
+#zoneImpression .pv-module.moyennes .module-presence tbody td {height:5.3mm;}
+#zoneImpression .pv-module.nombreuses .module-presence tbody td {height:4.25mm;font-size:8.6px;padding:.5mm;}
+#zoneImpression .pv-module.nombreuses .modele-en-tete {min-height:23mm;}
+#zoneImpression .pv-module.nombreuses .module-metadata {min-height:18mm;margin-bottom:3mm;}
+#zoneImpression .pv-module.nombreuses h2 {margin-bottom:3mm;}
+#zoneImpression .pv-module.nombreuses .module-presence thead th {height:10mm;}
+/* Evaluator panel must align flush with the main presence table above it. */
+#zoneImpression .module-evaluateur {width:100%;margin:7mm 0 0;text-align:center;font-size:10px;}
+#zoneImpression .module-evaluateur>strong {display:block;text-decoration:underline;margin-bottom:1mm;}
+#zoneImpression .module-evaluateur table {font-size:10px;}
+#zoneImpression .module-evaluateur th,#zoneImpression .module-evaluateur td {height:7mm;text-align:center;padding:1mm;}
+#zoneImpression .module-evaluateur th:first-child {width:65%;}
+#zoneImpression .pv-module.nombreuses .module-evaluateur {margin-top:4mm;}
+#zoneImpression .pv-module.nombreuses .module-evaluateur th,#zoneImpression .pv-module.nombreuses .module-evaluateur td {height:5mm;}
+/* Convocation matched to supplied DOCX: framed identity, Arabic text, yellow reminder. */
+#zoneImpression .convocation.modele-ofppt {padding:7mm 10mm 8mm;}
+#zoneImpression .convocation-entete {display:flex;justify-content:center;align-items:center;gap:4mm;height:25mm;padding:0;margin:0 0 11mm;}
+#zoneImpression .convocation-entete img.logo {width:24mm;height:22mm;object-fit:contain;}
+#zoneImpression .convocation-office {display:flex;flex-direction:column;align-items:center;text-align:center;min-width:83mm;}
+#zoneImpression .convocation-office img.arabe {width:83mm;max-height:10mm;object-fit:contain;border-bottom:1px solid #222;padding-bottom:1mm;}
+#zoneImpression .convocation-office strong {font-size:13px;line-height:1.16;}
+#zoneImpression .convocation-fiche {border:1px solid #555;}
+#zoneImpression .convocation-titre {font:bold 24px Tahoma,Arial,sans-serif;text-align:center;text-decoration:underline;border-bottom:1px solid #444;padding:1mm 0 1.5mm;line-height:1.25;}
+#zoneImpression .convocation-identite {width:100%;font-size:12px;}
+#zoneImpression .convocation-identite td {border:1px solid #555;padding:1mm 2mm;height:7.2mm;line-height:1.2;text-align:left;}
+#zoneImpression .convocation-identite tr td:first-child {border-left:0;}
+#zoneImpression .convocation-identite td strong,#zoneImpression .convocation-identite td b {font-size:12px;}
+#zoneImpression .convocation-invitation {font:22px/1.58 Tahoma,Arial,sans-serif;text-align:justify;text-align-last:center; margin:18mm 2mm 20mm;}
+#zoneImpression .convocation-invitation strong {font-weight:800;}
+#zoneImpression .convocation-delai {background:#ffff00;padding:0 1mm;white-space:nowrap;}
+#zoneImpression .convocation-programme {margin:0 0 12mm;font-size:11px;}
+#zoneImpression .convocation-programme th,#zoneImpression .convocation-programme td {text-align:center;padding:1mm .6mm;border:1px solid #555;}
+#zoneImpression .convocation-programme .programme-titre {font:bold 21px Tahoma,Arial,sans-serif;text-decoration:underline;padding:.3mm;text-align:center;}
+#zoneImpression .convocation-programme thead tr:nth-child(2) th {height:8mm;}
+#zoneImpression .convocation-programme tbody td {height:9mm;font-size:10.5px;font-weight:bold;}
+#zoneImpression .convocation-reglement {font:16px/1.38 Tahoma,Arial,sans-serif;text-align:right;margin:10mm 2mm 0;}
+#zoneImpression .convocation-reglement .reglement-titre {display:block;font-size:17px;line-height:1.3;}
+#zoneImpression .convocation-reglement ul {margin:2mm 0 1mm;padding-right:7mm;list-style-type:disc;}
+#zoneImpression .convocation-reglement li {margin:1mm 0;text-align:right;}
+#zoneImpression .convocation-administration {display:block;text-align:center;font-size:18px;margin-top:2mm;}
+/* Council: field structure, Arabic header, meeting text, signatories, copies. */
+#zoneImpression .feuille.pv-conseil.modele-conseil {padding:13mm 17mm 12mm!important;font-family:Tahoma,'Times New Roman',Arial,sans-serif;font-size:16px;line-height:1.55;color:#000;}
+#zoneImpression .modele-conseil .conseil-haut {display:grid;grid-template-columns:43% 57%;gap:4mm; align-items:start;font-size:12px;line-height:1.6;margin:0 0 13mm;}
+#zoneImpression .modele-conseil .conseil-haut div {margin:0;}
+#zoneImpression .modele-conseil .conseil-adresse {text-align:right;}
+#zoneImpression .modele-conseil .conseil-reference {font-size:12px;white-space:normal;margin-top:3mm;}
+#zoneImpression .modele-conseil h2 {font-size:20px;margin:0 0 10mm;text-align:center;color:black;}
+#zoneImpression .modele-conseil .conseil-paragraphe {text-align:justify;margin:0 0 5mm;line-height:1.7;}
+#zoneImpression .modele-conseil .conseil-faits {margin:2mm 6mm 6mm;}
+#zoneImpression .modele-conseil .conseil-faits p,#zoneImpression .modele-conseil .conseil-decision {margin:1mm 0 4mm;}
+#zoneImpression .modele-conseil .conseil-membres {margin:7mm 0 4mm;}
+#zoneImpression .modele-conseil .conseil-membres p {margin:1.5mm 0;font-size:14px;}
+#zoneImpression .modele-conseil .conseil-observations {margin:3mm 0 5mm;}
+#zoneImpression .modele-conseil .conseil-bas {font-size:11px;line-height:1.7;margin:11mm 0 0;text-align:right;}
+/* Longer disciplinary statements may continue on following paper, never silently clip text. */
+@media print {
+ #zoneImpression .feuille.pv-conseil.modele-conseil {
+    height:auto!important;
+    min-height:297mm!important;
+    overflow:visible!important;
+    break-inside:auto!important;
+    page-break-inside:auto!important;
+ }
+}
+
+/* EFM / CC: independent list d'affichage, not a second presence sheet. */
+#zoneImpression .module-affichage .module-affichage-titre {
+  text-align:center; font-style:normal; font-size:16px; margin:0 0 8mm; font-weight:800;
+}
+#zoneImpression .module-affichage .aff-details {margin:0 0 7mm;}
+#zoneImpression .module-affichage .module-affichage-liste thead th {height:9mm;}
+#zoneImpression .module-affichage .module-affichage-liste tbody td {height:6mm;}
+#zoneImpression .module-affichage.moyennes .module-affichage-liste tbody td {height:5.2mm;}
+#zoneImpression .module-affichage.nombreuses .module-affichage-liste tbody td {height:4.7mm;}
+
+
+/* Match OFPPT logo size from PV FF on affichage + EFM + CC layouts */
+#zoneImpression .pv-affichage .modele-logo-gauche img,
+#zoneImpression .pv-module .modele-logo-gauche img {
+    width: 23mm;
+    height: 21mm;
+    object-fit: contain;
+}

@@ -92,3 +92,46 @@ button.supprimer:hover { background: #61252d; }
 .barre-sauvegarde { margin-top: 18px; }
 .restaurer { margin-top: 18px; }
 @media (max-width: 550px) { .evenement { flex-direction: column; align-items: flex-start; } }
+
+
+/* Print fit adjustments for PV FF */
+.pv-ff .petit-entete { margin: 0 0 8px; font-size: 16px; }
+.pv-ff h2 { margin: 4px 0 8px; font-size: 17px; }
+.pv-ff .droite { margin: 8px 0; font-size: 12px; }
+.pv-ff .ligne-session { margin: 10px 0 10px; font-size: 12px; }
+.pv-ff .table-meta th, .pv-ff .table-meta td { font-size: 9px; padding: 5px 2px; }
+.pv-ff h3 { font-size: 14px; margin: 12px 0 6px; }
+.pv-ff .table-presence-ff th { height: 34px; font-size: 9px; }
+.pv-ff .table-presence-ff td { height: 6.8mm; font-size: 9px; }
+@media print {
+    .pv-ff.feuille { padding: 8mm 9mm; min-height: 297mm; }
+}
+
+
+/* One-page A4 printing for full groups, with compact rows when needed.
+   Larger groups are split at 40 students by documents.js. */
+@media print {
+    /* Do not reserve an almost full page before determining real content height. */
+    .feuille.pv-module, .feuille.pv-ff, .feuille.pv-affichage {
+        min-height: 0;
+        width: 210mm;
+        padding: 8mm 9mm;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    .pv-module h2 { margin: 6px 0 9px; font-size: 17px; }
+    .pv-module > strong { font-size: 13px; }
+    .pv-module > p { margin: 5px 0; font-size: 12px; }
+    .pv-module .module-infos { margin: 9px 0 10px; font-size: 12px; }
+    .pv-module .module-infos p { margin: 5px 0; }
+    .pv-module .table-module th { height: 35px; padding: 4px 3px; }
+    .pv-module .table-module td { height: 6.8mm; padding: 3px 3px; }
+    .pv-module.compact .table-module td { height: 4.8mm; padding: 1px 2px; font-size: 8.5px; line-height: 1.1; }
+    .pv-module.compact .table-module th { height: 28px; font-size: 9px; line-height: 1.1; }
+    .pv-ff.compact .table-presence-ff td { height: 5.2mm; padding: 2px 3px; font-size: 9px; }
+    .pv-ff.compact .table-presence-ff th { height: 32px; }
+    .pv-affichage .aff-infos { margin: 10px 0 12px; }
+    .pv-affichage .aff-infos p { margin: 5px 0; font-size: 12px; }
+    .pv-affichage .table-affichage td { height: 6.8mm; padding: 3px; }
+    .pv-affichage.compact .table-affichage td { height: 5.2mm; padding: 2px; font-size: 9px; }
+}

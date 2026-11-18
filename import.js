@@ -34,7 +34,11 @@ function trouverNiveau(ligne) {
     let niveau = colonne(ligne, ["Niveau"]);
     if (niveau !== "") return niveau;
 
-    let code = colonne(ligne, ["LibelleLong"]);
+    let code = colonne(ligne, ["LibelleLong", "Code Filière"]);
+    if (code.endsWith("_TS")) return "TECHNICIEN SPÉCIALISÉ";
+    if (code.endsWith("_T")) return "TECHNICIEN";
+    if (code.endsWith("_Q")) return "QUALIFICATION";
+    if (code.endsWith("_S")) return "SPÉCIALISATION";
     if (code.includes("_TS_")) return "TECHNICIEN SPÉCIALISÉ";
     if (code.includes("_FQ_")) return "FORMATION QUALIFIANTE";
     if (code.includes("_T_")) return "TECHNICIEN";
@@ -44,14 +48,20 @@ function trouverNiveau(ligne) {
 }
 
 function creerStagiaire(ligne) {
+    const candidatureLibre = colonne(ligne, ["ID Candidature"]) !== "" || colonne(ligne, ["Statut Candidature"]) !== "";
     return {
         cef: colonne(ligne, ["MatriculeEtudiant", "CEF", "Matricule"]),
         nom: colonne(ligne, ["Nom"]),
         prenom: colonne(ligne, ["Prenom", "Prénom"]),
         cni: colonne(ligne, ["CIN", "CNI"]),
         filiere: trouverFiliere(ligne),
-        groupe: colonne(ligne, ["CodeDiplome", "Groupe"]),
-        niveau: trouverNiveau(ligne)
+        // Le fichier « situation candidat libre » n'a pas de colonne Groupe.
+        groupe: colonne(ligne, ["CodeDiplome", "Groupe"]) || (candidatureLibre ? "CL" : ""),
+        niveau: trouverNiveau(ligne),
+        candidatLibre: candidatureLibre,
+        codeFiliere: colonne(ligne, ["Code Filière"]),
+        centreExamen: colonne(ligne, ["CENTRE D'EXAMEN"]),
+        origine: colonne(ligne, ["EFP D'ORIGINE"])
     };
 }
 
@@ -138,7 +148,7 @@ async function importerFichier() {
             return;
         }
 
-        element("message").textContent = stagiaires.length + " inscriptions importées. Vérifiez les informations avant l'impression.";
+        element("message").textContent = stagiaires.length + " inscriptions retrouvées dans ce navigateur.";
         remplirFilieres();
         sauvegarderLocalement();
     } catch (erreur) {

@@ -12,7 +12,7 @@
 <script defer="" src="conseil.js"></script>
 <script defer="" src="discipline.js"></script>
 <script defer="" src="app.js"></script>
-<link href="interface.css" rel="stylesheet"/><script defer="" src="navigation.js"></script><script defer="" src="absences.js"></script></head>
+<link href="interface.css" rel="stylesheet"/><link href="print-templates.css" rel="stylesheet"/><script defer="" src="navigation.js"></script><script defer="" src="absences.js"></script><script defer="" src="suivi-absences.js"></script></head>
 <body>
 <div class="application"><aside aria-label="Navigation principale" class="navBar">
 <a aria-label="OFPPT, page importation" class="brand" href="#importer">
@@ -27,34 +27,30 @@
 <li><a data-nav="stagiaires" href="#stagiaires"><span class="nav-number">03</span><span>Stagiaires</span></a></li>
 <li><a data-nav="documents" href="#documents"><span class="nav-number">04</span><span>Documents</span></a></li>
 <li><a data-nav="discipline" href="#discipline"><span class="nav-number">05</span><span>Discipline</span></a></li>
-<li><a data-nav="absences" href="#absences"><span class="nav-number">06</span><span>Absences</span></a></li>
-<li><a data-nav="conseil" href="#conseil"><span class="nav-number">07</span><span>Conseil disciplinaire</span></a></li>
+<li><a data-nav="absences" href="#absences"><span class="nav-number">06</span><span>Absences</span></a></li><li><a data-nav="conseil" href="#conseil"><span class="nav-number">07</span><span>Conseil disciplinaire</span></a></li>
 </ul></nav>
-
-</aside>
-<main class="workspace"><header class="page-header" id="pageHeader">
+<a aria-label="Ouvrir le tableau de bord des absences" class="sidebar-dashboard" href="#dashboard" id="boutonDashboard">Dashboard</a></aside>
+<main class="workspace primary-workspace" id="main-workspace"><header class="page-header" id="pageHeader">
 <div class="page-intro">
-<p class="eyebrow">OFPPT / Espace de gestion</p>
 <h1 id="pageTitre">Importer les stagiaires</h1>
-<p id="pageDescription">Commencez par charger votre liste de stagiaires pour préparer les examens et les documents.</p>
-</div>
-<div aria-label="Étape actuelle" class="page-progress">
-<span class="progress-label">SECTION</span>
-<span id="pageCompteur">01 <span class="progress-divider">/ 07</span></span>
+<p id="pageDescription"></p>
 </div>
 </header>
 <section aria-hidden="false" aria-labelledby="heading-importer" class="workspace-section import-card" data-section="importer" id="importer">
-<h2 id="heading-importer"><span aria-hidden="true" class="etape">1</span>Importer les stagiaires</h2><div aria-label="Étapes de préparation" class="welcome-guide">
-<div class="guide-card"><span class="guide-num">01</span><div><strong>Importer la liste</strong><p>Ajoutez les stagiaires depuis Excel ou CSV.</p></div></div>
-<div class="guide-card"><span class="guide-num">02</span><div><strong>Préparer l'examen</strong><p>Choisissez la filière, le groupe et les horaires.</p></div></div>
-<div class="guide-card"><span class="guide-num">03</span><div><strong>Générer les documents</strong><p>Imprimez les convocations et feuilles utiles.</p></div></div>
-</div>
-<p>Sélectionnez votre fichier XLS ou XLSX.</p>
-<div class="file-field"><input accept=".xlsx,.xls,.csv" id="fichierExcel" type="file"/></div>
-<p class="aide" id="message" role="status">Aucun stagiaire. Importez votre fichier Excel.</p>
-<div class="step-navigation"><a class="next-step" href="#examen">Étape suivante<span aria-hidden="true">→</span></a></div></section>
+<h2 aria-label="Importer les stagiaires" id="heading-importer"><span aria-hidden="true" class="etape">1</span></h2>
+<label class="upload-box">
+<input accept=".xlsx,.xls,.csv" id="fichierExcel" type="file"/>
+<span class="upload-icon">☁</span>
+<strong>Téléchargez votre fichier </strong>
+<small>Glissez-déposez votre fichier ici</small>
+<small>ou parcourez vos fichiers</small>
+<span class="upload-btn">Choisir un fichier</span>
+<p id="message" role="status">Aucun fichier importé.</p>
+</label>
+<div class="step-navigation"><a class="next-step" href="#examen">Étape suivante<span aria-hidden="true">→</span></a></div>
+</section>
 <section aria-hidden="true" aria-labelledby="heading-examen" class="workspace-section exam-card" data-section="examen" hidden="" id="examen">
-<h2 id="heading-examen"><span aria-hidden="true" class="etape">2</span>Informations de l'examen</h2>
+<h2 aria-label="Informations de l’examen" id="heading-examen"><span aria-hidden="true" class="etape">2</span></h2>
 <div class="champs">
 <div>
 <label for="filiere">Filière</label>
@@ -122,7 +118,7 @@
 </div>
 <div class="step-navigation"><a class="next-step" href="#stagiaires">Étape suivante<span aria-hidden="true">→</span></a></div></section>
 <section aria-hidden="true" aria-labelledby="heading-stagiaires" class="workspace-section students-card" data-section="stagiaires" hidden="" id="stagiaires">
-<h2 id="heading-stagiaires"><span aria-hidden="true" class="etape">3</span>Liste des stagiaires (<span id="nombre">0</span>)</h2>
+<h2 aria-label="Liste des stagiaires" id="heading-stagiaires"><span aria-hidden="true" class="etape">3</span><span hidden="" id="nombre">0</span></h2>
 <div class="tableau" tabindex="0">
 <table>
 <thead>
@@ -136,18 +132,15 @@
 </div>
 <div class="step-navigation"><a class="next-step" href="#documents">Étape suivante<span aria-hidden="true">→</span></a></div></section>
 <section aria-hidden="true" aria-labelledby="heading-documents" class="workspace-section documents-card" data-section="documents" hidden="" id="documents">
-<h2 id="heading-documents"><span aria-hidden="true" class="etape">4</span>Générer les documents des examens</h2>
-<p>Choisissez d'abord la filière, le groupe et les informations de l'examen.</p>
+<h2 aria-label="Générer les documents des examens" id="heading-documents"><span aria-hidden="true" class="etape">4</span></h2>
 <div class="boutons">
 <button id="boutonConvocations">Convocations</button>
 <button id="boutonPresences">PV FF / Feuille de présence</button>
 <button id="boutonAffichage">Liste d'affichage</button>
 </div>
-<p class="aide">Pour les examens EFF, les boutons utilisent les modèles PV FF et AFF FF des fichiers Excel. Pour EFM et CC, un autre modèle de présence est utilisé.</p>
-<div class="step-navigation"><a class="next-step" href="#discipline">Étape suivante<span aria-hidden="true">→</span></a></div><p class="aide document-help">Pour sauvegarder un PDF : cliquez sur un bouton d'impression, puis choisissez « Enregistrer au format PDF » dans le navigateur. Aucune base de données n'est utilisée.</p></section>
+<div class="step-navigation"><a class="next-step" href="#discipline">Étape suivante<span aria-hidden="true">→</span></a></div></section>
 <section aria-hidden="true" aria-labelledby="heading-discipline" class="workspace-section discipline-card" data-section="discipline" hidden="" id="sectionDiscipline"><span aria-hidden="true" class="route-anchor" id="discipline"></span>
-<h2 id="heading-discipline"><span aria-hidden="true" class="etape">5</span>Note de discipline</h2>
-<p>Choisissez un stagiaire, la durée de sa formation et son année. La note est sur 20 avant la dernière année et sur 15 en dernière année (selon la grille à confirmer avec l'administration).</p>
+<h2 aria-label="Note de discipline" id="heading-discipline"><span aria-hidden="true" class="etape">5</span></h2>
 <div class="champs">
 <div>
 <label for="stagiaireDiscipline">Stagiaire</label>
@@ -188,9 +181,8 @@
 <button data-evenement="journee" type="button">+ 1 absence : 1 journée (−1)</button>
 <button data-evenement="comportement" type="button">+ 1 indiscipline</button>
 </div>
-<p class="aide">Une séance = 2,5 heures ; une journée = 2 séances. En cursus de 3 ans : 1ère et 2ème années /20, 3ème année /15. Les règles pour les formations d'un an restent à confirmer par l'administration. Aucune sanction n'est décidée automatiquement.</p>
-<details class="subsection-disclosure" id="panel-historique"><summary><span class="disclosure-title">Historique de ce stagiaire</span><span class="disclosure-helper">Consulter le suivi</span></summary><div class="historique" id="historiqueDiscipline">Aucun stagiaire sélectionné.</div></details>
-<details class="subsection-disclosure" id="panel-notes"><summary><span class="disclosure-title">Notes de discipline des stagiaires affichés</span><span class="disclosure-helper">Voir les notes du groupe</span></summary><div class="tableau" tabindex="0">
+<details class="subsection-disclosure" id="panel-historique"><summary><span class="disclosure-title">Historique de ce stagiaire</span></summary><div class="historique" id="historiqueDiscipline">Aucun stagiaire sélectionné.</div></details>
+<details class="subsection-disclosure" id="panel-notes"><summary><span class="disclosure-title">Notes de discipline des stagiaires affichés</span></summary><div class="tableau" tabindex="0">
 <table>
 <thead>
 <tr>
@@ -202,53 +194,43 @@
 <tbody id="tableNotesDiscipline"></tbody>
 </table>
 </div></details>
-<details class="subsection-disclosure" id="panel-sauvegardes"><summary><span class="disclosure-title">Sauvegardes et export</span><span class="disclosure-helper">Exporter ou restaurer les données</span></summary><div class="boutons barre-sauvegarde">
+<details class="subsection-disclosure" id="panel-sauvegardes"><summary><span class="disclosure-title">Sauvegardes et export</span></summary><div class="boutons barre-sauvegarde">
 <button id="exporterNotes" type="button">Exporter les notes (.csv)</button>
 <button id="sauvegarderDonnees" type="button">Sauvegarder les données (.json)</button>
 </div><div class="restaurer">
 <label for="restaurerDonnees">Restaurer une sauvegarde JSON</label>
 <input accept=".json,application/json" id="restaurerDonnees" type="file"/>
-</div><p class="aide" id="messageSauvegarde">Les données sont conservées localement dans ce navigateur, sans serveur et sans base de données. Faites régulièrement une sauvegarde JSON pour éviter toute perte.</p></details>
+</div><p class="aide" id="messageSauvegarde" role="status"></p></details>
 <div class="step-navigation"><a class="next-step" href="#absences">Étape suivante<span aria-hidden="true">→</span></a></div></section>
 <section aria-hidden="true" aria-labelledby="heading-absences" class="workspace-section absences-card" data-section="absences" hidden="" id="absences">
-<h2 id="heading-absences"><span aria-hidden="true" class="etape">6</span>Tableau de bord des absences</h2>
-<p>Visualisez les absences et retards déjà saisis dans <strong>Discipline</strong>. Les données sont lues dans les dossiers de l'année scolaire sélectionnée, sans modifier les notes.</p>
+<h2 aria-label="Absences" id="heading-absences"><span aria-hidden="true" class="etape">6</span></h2>
 <div class="absence-toolbar">
-  <div><label for="absenceFiliere">Filière</label><select id="absenceFiliere"><option value="">Toutes les filières</option></select></div>
-  <div><label for="absenceGroupe">Groupe</label><select id="absenceGroupe"><option value="">Tous les groupes</option></select></div>
-  <div><label for="absenceRecherche">Rechercher</label><input id="absenceRecherche" type="search" placeholder="Nom, prénom ou CEF" /></div>
-  <div><label for="absenceSituation">Afficher</label><select id="absenceSituation"><option value="tous">Tous les stagiaires</option><option value="absents">Avec absences</option><option value="sans">Sans absence</option></select></div>
-  <div><label for="absenceDateDebut">Du</label><input id="absenceDateDebut" type="date" /></div>
-  <div><label for="absenceDateFin">Au</label><input id="absenceDateFin" type="date" /></div>
+<div><label for="suiviAbsenceFiliere">Filière</label><select id="suiviAbsenceFiliere"><option value="">Toutes les filières</option></select></div>
+<div><label for="suiviAbsenceGroupe">Groupe</label><select id="suiviAbsenceGroupe"><option value="">Tous les groupes</option></select></div>
+<div><label for="suiviAbsenceRecherche">Rechercher</label><input id="suiviAbsenceRecherche" placeholder="Nom, prénom ou CEF" type="search"/></div>
+<div><label for="suiviAbsenceSituation">Afficher</label><select id="suiviAbsenceSituation"><option value="tous">Tous les stagiaires</option><option value="absents">Avec absences</option><option value="sans">Sans absence</option></select></div>
+<div><label for="suiviAbsenceDateDebut">Du</label><input id="suiviAbsenceDateDebut" type="date"/></div>
+<div><label for="suiviAbsenceDateFin">Au</label><input id="suiviAbsenceDateFin" type="date"/></div>
 </div>
-<p class="absence-scope" id="absencePeriode" role="status">Année scolaire : —</p>
-<div class="absence-metrics" aria-label="Statistiques des absences">
-  <div class="absence-metric"><span>Stagiaires affichés</span><strong id="absenceKpiStagiaires">0</strong></div>
-  <div class="absence-metric"><span>Stagiaires absents</span><strong id="absenceKpiConcernes">0</strong></div>
-  <div class="absence-metric"><span>Absences (séances)</span><strong id="absenceKpiSeances">0</strong></div>
-  <div class="absence-metric"><span>Heures d'absence</span><strong id="absenceKpiHeures">0 h</strong></div>
-  <div class="absence-metric"><span>Retards</span><strong id="absenceKpiRetards">0</strong></div>
+<p class="absence-scope" id="suiviAbsencePeriode" role="status">Année scolaire : —</p>
+<div class="absence-table-header">
+<h3>Suivi des absences par stagiaire</h3>
+<button id="suiviAbsenceExportCsv" type="button">Exporter le tableau (.csv)</button>
 </div>
-<div class="absence-panels">
-  <div class="absence-panel">
-    <h3>Absences par groupe</h3>
-    <div id="absenceGraphique" class="absence-graph" role="list" aria-label="Nombre de séances d'absence par groupe"><p class="absence-vide">Aucune absence enregistrée pour cette sélection.</p></div>
-  </div>
-  <div class="absence-panel absence-explainer">
-    <h3>Comprendre les chiffres</h3>
-    <p>1 séance = 2,5 heures. Une absence d'une journée correspond à 2 séances (5 heures). Les retards sont comptés séparément.</p>
-    <p>Pour enregistrer ou annuler un événement, ouvrez la section <strong>Discipline</strong>. Les statistiques se mettent à jour ensuite.</p>
-    <a href="#discipline" class="absence-shortcut">Enregistrer une absence <span aria-hidden="true">→</span></a>
-  </div>
+<div class="tableau absence-table" tabindex="0">
+<table>
+<thead><tr><th>CEF</th><th>Nom et prénom</th><th>Filière</th><th>Groupe</th><th>Séances</th><th>Heures</th><th>Retards</th><th>Dernière absence</th><th>Détails</th></tr></thead>
+<tbody id="suiviAbsenceTableCorps"><tr><td colspan="9">Importez une liste de stagiaires pour afficher le tableau.</td></tr></tbody>
+</table>
 </div>
-<div class="absence-table-header"><h3>Détail par stagiaire</h3><button type="button" id="absenceExportCsv">Exporter le tableau (.csv)</button></div>
-<div class="tableau absence-table" tabindex="0"><table><thead><tr><th>CEF</th><th>Nom et prénom</th><th>Filière</th><th>Groupe</th><th>Séances</th><th>Heures</th><th>Retards</th><th>Dernière absence</th><th>Détails</th></tr></thead><tbody id="absenceTableCorps"><tr><td colspan="9">Importez une liste de stagiaires pour afficher le tableau.</td></tr></tbody></table></div>
-<div id="absenceDetails" class="absence-details" aria-live="polite" hidden=""><div class="absence-details-header"><h3 id="absenceDetailsTitre">Historique</h3><button id="absenceFermerDetails" type="button" class="absence-close">Fermer</button></div><div id="absenceDetailsContenu"></div></div>
+<div aria-live="polite" class="absence-details" hidden="" id="suiviAbsenceDetails">
+<div class="absence-details-header"><h3 id="suiviAbsenceDetailsTitre">Historique</h3><button class="absence-close" id="suiviAbsenceFermerDetails" type="button">Fermer</button></div>
+<div id="suiviAbsenceDetailsContenu"></div>
+</div>
 <div class="step-navigation"><a class="next-step" href="#conseil">Étape suivante<span aria-hidden="true">→</span></a></div>
 </section>
 <section aria-hidden="true" aria-labelledby="heading-conseil" class="workspace-section conseil-card" data-section="conseil" hidden="" id="conseil">
-<h2 id="heading-conseil"><span aria-hidden="true" class="etape">7</span>Conseil disciplinaire</h2>
-<p>Choisissez un stagiaire et remplissez manuellement les informations du conseil.</p>
+<h2 aria-label="Conseil disciplinaire" id="heading-conseil"><span aria-hidden="true" class="etape">7</span></h2>
 <div class="champs">
 <div>
 <label for="stagiaireConseil">Stagiaire concerné</label>
@@ -298,9 +280,29 @@ Nom 3" rows="4"></textarea>
 <div class="boutons">
 <button id="boutonConseil">Imprimer le PV du conseil disciplinaire</button>
 </div>
-
 </section>
-</main>
+</main><main aria-label="Tableau de bord des absences" class="workspace dashboard-workspace" hidden="" id="dashboard-screen"><header aria-hidden="true" class="page-header dashboard-page-header dashboard-internal-only" hidden=""><div class="page-intro"><h1 id="dashboardTitre">Tableau de bord des absences</h1></div></header><section aria-label="Tableau de bord des absences" class="workspace-section absences-card" id="dashboard">
+<div aria-hidden="true" class="absence-toolbar dashboard-internal-only" hidden="">
+<div><label for="absenceFiliere">Filière</label><select id="absenceFiliere"><option value="">Toutes les filières</option></select></div>
+<div><label for="absenceGroupe">Groupe</label><select id="absenceGroupe"><option value="">Tous les groupes</option></select></div>
+</div><div class="dashboard-internal-only" hidden=""><div><label for="absenceDateFin">Au</label><input id="absenceDateFin" type="date"/></div></div><div class="dashboard-internal-only" hidden=""><div><label for="absenceDateDebut">Du</label><input id="absenceDateDebut" type="date"/></div></div><div class="dashboard-internal-only" hidden=""><div><label for="absenceSituation">Afficher</label><select id="absenceSituation"><option value="tous">Tous les stagiaires</option><option value="absents">Avec absences</option><option value="sans">Sans absence</option></select></div></div><div class="dashboard-internal-only" hidden=""><div><label for="absenceRecherche">Rechercher</label><input id="absenceRecherche" placeholder="Nom, prénom ou CEF" type="search"/></div></div><p class="absence-scope" id="absencePeriode" role="status">Année scolaire : —</p>
+<div aria-label="Statistiques des absences" class="absence-metrics">
+<div class="absence-metric"><span>Stagiaires affichés</span><strong id="absenceKpiStagiaires">0</strong></div>
+<div class="absence-metric"><span>Stagiaires absents</span><strong id="absenceKpiConcernes">0</strong></div>
+<div class="absence-metric"><span>Absences (séances)</span><strong id="absenceKpiSeances">0</strong></div>
+<div class="absence-metric"><span>Heures d'absence</span><strong id="absenceKpiHeures">0 h</strong></div>
+<div class="absence-metric"><span>Retards</span><strong id="absenceKpiRetards">0</strong></div>
+</div>
+<div class="absence-panels">
+<div class="absence-panel">
+<h3>Absences par groupe</h3>
+<div aria-label="Nombre de séances d'absence par groupe" class="absence-graph" id="absenceGraphique" role="list"><p class="absence-vide">Aucune absence enregistrée pour cette sélection.</p></div>
+</div>
+</div>
+<div aria-hidden="true" class="absence-table-header dashboard-internal-only" hidden=""><h3>Détail par stagiaire</h3><button id="absenceExportCsv" type="button">Exporter le tableau (.csv)</button></div>
+<div aria-hidden="true" class="tableau absence-table dashboard-internal-only" hidden="" tabindex="0"><table><thead><tr><th>CEF</th><th>Nom et prénom</th><th>Filière</th><th>Groupe</th><th>Séances</th><th>Heures</th><th>Retards</th><th>Dernière absence</th><th>Détails</th></tr></thead><tbody id="absenceTableCorps"><tr><td colspan="9">Importez une liste de stagiaires pour afficher le tableau.</td></tr></tbody></table></div>
+<div aria-hidden="true" aria-live="polite" class="absence-details dashboard-internal-only" hidden="" id="absenceDetails"><div class="absence-details-header"><h3 id="absenceDetailsTitre">Historique</h3><button class="absence-close" id="absenceFermerDetails" type="button">Fermer</button></div><div id="absenceDetailsContenu"></div></div>
+</section></main>
 </div>
 <div id="zoneImpression"></div>
 </body>

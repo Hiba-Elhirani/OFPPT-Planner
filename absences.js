@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     const $ = id => document.getElementById(id);
-    const dashboard = $('absences');
+    const dashboard = $('dashboard');
     if (!dashboard) return;
 
     const names = {
@@ -236,7 +236,7 @@
     $('absenceExportCsv').addEventListener('click', exportCsv);
     $('annee').addEventListener('input', render);
     window.addEventListener('hashchange', () => {
-        if (location.hash === '#absences') render();
+        if (location.hash === '#dashboard') render();
     });
     document.addEventListener('click', event => {
         if (event.target.closest('[data-evenement], #historiqueDiscipline .supprimer')) render();
