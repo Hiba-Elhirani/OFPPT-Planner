@@ -1,4 +1,3 @@
-// Impression sur modèles OFPPT : convocations (DOCX), PV FF / affichage (Excel), EFM et CC (Excel).
 function securiser(texte) {
     return String(texte ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;")
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -25,7 +24,6 @@ const MODELES = {
 };
 const MAX_LIGNES_PAR_FEUILLE = 40;
 function lignesParFeuille(liste) {
-    // Les noms particulièrement longs exigent davantage de hauteur: éviter de couper les lignes à l'impression.
     const longs = liste.filter(s => String(s.nom || '').length > 23 || String(s.prenom || '').length > 23).length;
     return longs >= 6 ? 30 : longs >= 3 ? 35 : MAX_LIGNES_PAR_FEUILLE;
 }
@@ -77,7 +75,6 @@ function sessionArabe(texte) {
     return result;
 }
 function creerConvocation(stagiaire, examen) {
-    // Même structure de convocation que les deux modèles DOCX fournis.
     const niveau = niveauLisible(examen, stagiaire);
     const session = sessionArabe(examen.session);
     const titre = 'استدعاء اجتياز امتحانات نهاية التكوين';
@@ -168,7 +165,6 @@ function creerPresenceModule(liste,examen,affichage){
     for(let debut=0;debut<liste.length;debut+=capacite){
         const groupe=liste.slice(debut,debut+capacite);
         let lignes=groupe.map((s,i)=>`<tr><td>${debut+i+1}</td><td>${securiser(s.cef)}</td><td>${securiser(s.nom)}</td><td>${securiser(s.prenom)}</td><td></td><td></td><td></td></tr>`).join('');
-        // Les modèles EFM/CC d'origine comportent 25 lignes numérotées, même si le groupe est plus petit.
         if (liste.length <= MAX_LIGNES_PAR_FEUILLE) {
             for(let i=groupe.length;i<Math.min(25,MAX_LIGNES_PAR_FEUILLE);i++)
                 lignes+=`<tr><td>${i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
@@ -199,8 +195,6 @@ function creerPresenceModule(liste,examen,affichage){
     return resultat;
 }
 
-// Liste d'affichage EFM / CC : volontairement distincte de la feuille de présence.
-// Aucune colonne de signature ni bloc "formateur évaluateur" ne figure sur cette liste.
 function creerAffichageModule(liste, examen) {
     let resultat = '';
     const niveau = niveauLisible(examen, liste[0]);
@@ -233,7 +227,6 @@ function creerAffichageModule(liste, examen) {
 
 function ouvrirImpression(html){
     element('zoneImpression').innerHTML=html;
-    // Let layout/images settle before opening Chrome's print preview.
     const imgs=Array.from(element('zoneImpression').querySelectorAll('img'));
     const ready=imgs.map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});}));
     Promise.all(ready).then(()=>window.print());
@@ -248,12 +241,11 @@ function imprimer(type){
     if (!liste.length) { alert('Aucun stagiaire dans le groupe sélectionné.');return; }
     const examen=infosExamen();
     let html='';
-    // Each print button has its own document generator, for every exam type.
     if (type === 'convocations') {
         html = liste.map(s => creerConvocation(s, examen)).join('');
     } else if (type === 'presences') {
         html = examen.type === 'EFF'
-            ? creerPresenceFF(liste, examen)   // Keep the established PV FF layout unchanged.
+            ? creerPresenceFF(liste, examen)
             : creerPresenceModule(liste, examen, false);
     } else if (type === 'affichage') {
         html = examen.type === 'EFF'

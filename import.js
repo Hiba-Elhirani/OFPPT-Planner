@@ -55,7 +55,6 @@ function creerStagiaire(ligne) {
         prenom: colonne(ligne, ["Prenom", "Prénom"]),
         cni: colonne(ligne, ["CIN", "CNI"]),
         filiere: trouverFiliere(ligne),
-        // Le fichier « situation candidat libre » n'a pas de colonne Groupe.
         groupe: colonne(ligne, ["CodeDiplome", "Groupe"]) || (candidatureLibre ? "CL" : ""),
         niveau: trouverNiveau(ligne),
         candidatLibre: candidatureLibre,

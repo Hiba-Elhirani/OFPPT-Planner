@@ -119,7 +119,6 @@ initialiserDiscipline();
 chargerDonneesLocales();
 
 
-// Support files dropped on the Safa-style uploader as well as the file chooser.
 (function activerGlisserDeposer() {
     const zone = document.querySelector('label.upload-box');
     const fichierInput = document.getElementById('fichierExcel');
